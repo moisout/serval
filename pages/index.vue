@@ -9,7 +9,13 @@ const { data: exercises } = useFetch('/api/exercises')
       <PrimaryButton to="/create" text="Aufgabenbuch erstellen" />
     </div>
   </TitleBox>
-  <div class="exercises">{{ exercises }}</div>
+  <div class="exercises">
+    <ListExercise
+      v-for="(exercise, index) in exercises"
+      :exercise="exercise"
+      :key="index"
+    />
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -31,5 +37,13 @@ const { data: exercises } = useFetch('/api/exercises')
 .exercises {
   position: relative;
   z-index: 10;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1em 2em;
 }
 </style>

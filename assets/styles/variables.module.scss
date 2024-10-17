@@ -1,0 +1,8 @@
+@use './globals.scss' as globalVariables;
+
+:export {
+  primary: globalVariables.$primary;
+  danger: globalVariables.$danger;
+  success: globalVariables.$success;
+  textPrimary: globalVariables.$text-primary;
+}

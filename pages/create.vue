@@ -1,12 +1,31 @@
+<script setup lang="ts">
+const { data } = useAuth()
+
+const exercise = reactive<Exercise>({
+  name: 'Neues Aufgabenbuch',
+  topic: 'z.B. Mathe',
+  author: data.value?.username || 'Unbekannt',
+  questions: []
+})
+
+const saveExercise = async () => {
+  $fetch('/api/exercises', {
+    method: 'POST',
+    body: exercise
+  })
+}
+</script>
+
 <template>
   <TitleBox>
     <div class="create-title-section">
       <p class="create-title">Aufgabenbuch erstellen</p>
+      <PrimaryButton type="button" text="Speichern" @click="saveExercise" />
     </div>
   </TitleBox>
   <div class="create-outer">
     <div class="create">
-      <CreateForm />
+      <CreateForm :exercise="exercise" />
     </div>
   </div>
 </template>

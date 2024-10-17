@@ -8,7 +8,7 @@
 <style lang="scss" scoped>
 .title-box {
   position: relative;
-  height: 100px;
+  height: 75px;
 
   .title-box-bg {
     z-index: 1;

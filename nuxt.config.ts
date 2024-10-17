@@ -12,6 +12,9 @@ export default defineNuxtConfig({
           username: 'string'
         }
       },
+      token: {
+        maxAgeInSeconds: 31_556_952
+      },
       endpoints: {
         signIn: { path: '/login', method: 'post' },
         signOut: { path: '/logout', method: 'post' },

@@ -5,7 +5,7 @@ $primary-dark: #d8574e;
 $secondary: #cb99c9;
 $primary-translucent: color.adjust($primary, $lightness: 28%);
 
-$gray-100: #f8f9fa;
+$gray-100: #f8fafc;
 $gray-200: #e9ecef;
 $gray-300: #dee2e6;
 $gray-400: #ced4da;
@@ -19,8 +19,9 @@ $success: #679e74;
 $warning: #ffc107;
 $danger: #db626e;
 
-$bg-primary: #fafafa;
+$bg-primary: #ffffff;
 
 $text-primary: #1c1c1c;
+$text-secondary: #495057;
 
 $header-height: 70px;

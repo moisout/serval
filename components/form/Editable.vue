@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import globalVariables from '~/assets/styles/variables.module.scss'
+const { danger, success } = globalVariables
+
 defineProps<{
   title?: boolean
   label?: string
@@ -37,7 +40,8 @@ const onKeyDown = (e: KeyboardEvent) => {
 }
 
 const textWidth = computed(() => {
-  return tempValue.value.length * 0.9
+  const width = tempValue.value.length * 0.9
+  return Math.max(width, 1)
 })
 </script>
 
@@ -55,23 +59,25 @@ const textWidth = computed(() => {
       :size="textWidth"
       @keydown="onKeyDown"
     />
-    <Icon
+    <IconButton
       v-if="mode === 'view'"
-      name="material-symbols:edit-outline"
+      icon="material-symbols:edit-outline"
       @click="edit"
       class="editable-edit-btn"
     />
-    <Icon
+    <IconButton
       v-if="mode === 'edit'"
-      name="material-symbols:check"
+      icon="material-symbols:check"
       @click="save"
-      class="editable-edit-btn save"
+      class="editable-edit-btn"
+      :color="success"
     />
-    <Icon
+    <IconButton
       v-if="mode === 'edit'"
-      name="material-symbols:close"
+      icon="material-symbols:close"
       @click="cancel"
-      class="editable-edit-btn cancel"
+      class="editable-edit-btn"
+      :color="danger"
     />
   </div>
 </template>
@@ -83,23 +89,16 @@ const textWidth = computed(() => {
 
   &.title {
     .editable-view {
-      font-size: 1.8rem;
+      margin: auto 0;
+      font-size: 1.6rem;
     }
 
     .editable-input {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
     }
 
     .editable-edit-btn {
-      font-size: 1.4rem;
-
-      &.save {
-        color: globals.$success;
-      }
-
-      &.cancel {
-        color: globals.$danger;
-      }
+      font-size: 1.3rem;
     }
   }
 
@@ -107,6 +106,7 @@ const textWidth = computed(() => {
     padding: 5px;
     border: 1px solid globals.$gray-300;
     border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
 
     &:focus-within {
       border-color: globals.$primary;
@@ -115,8 +115,8 @@ const textWidth = computed(() => {
   }
 
   .editable-edit-btn {
-    cursor: pointer;
     margin: auto 0;
+    padding: 2px 4px 0 4px;
   }
 }
 </style>
