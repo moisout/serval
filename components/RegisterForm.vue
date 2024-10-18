@@ -2,16 +2,16 @@
 const username = ref('')
 const password = ref('')
 
-const { signIn } = useAuth()
+const { signUp } = useAuth()
 
-const login = async () => {
+const register = async () => {
   try {
-    await signIn(
+    await signUp(
       { username: username.value, password: password.value },
       { callbackUrl: '/' }
     )
   } catch {
-    error.value = 'Falscher Benutzername oder Passwort'
+    error.value = 'Registrierung fehlgeschlagen'
   }
 }
 
@@ -19,19 +19,17 @@ const error = ref('')
 </script>
 
 <template>
-  <form @submit.prevent="login" class="login-form">
+  <form @submit.prevent="register" class="register-form">
     <div class="error" v-if="error">{{ error }}</div>
     <FormInput type="text" v-model="username" label="Benutzername" />
     <FormInput type="password" v-model="password" label="Passwort" />
-    <PrimaryButton type="submit" text="Login" filled />
-    <NuxtLink to="/register" class="register-link">
-      Neuen Account erstellen
-    </NuxtLink>
+    <PrimaryButton type="submit" text="Registrieren" filled />
+    <NuxtLink to="/login" class="login-link"> Stadtdessen einloggen </NuxtLink>
   </form>
 </template>
 
 <style lang="scss" scoped>
-.login-form {
+.register-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -46,7 +44,7 @@ const error = ref('')
     color: globals.$danger;
   }
 
-  .register-link {
+  .login-link {
     font-size: 0.8rem;
     text-align: center;
     margin-top: 10px;

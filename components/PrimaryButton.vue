@@ -22,12 +22,12 @@ const onClick = () => {
 </script>
 
 <template>
-  <nuxt-link
+  <NuxtLink
     v-if="type === 'link'"
     :to="to"
     class="primary-button"
     :class="{ filled }"
-    >{{ text }}</nuxt-link
+    >{{ text }}</NuxtLink
   >
   <button
     v-else-if="type === 'submit'"

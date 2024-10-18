@@ -1,9 +1,9 @@
 <template>
   <header>
-    <nuxt-link to="/" class="title">
+    <NuxtLink to="/" class="title">
       <Icon name="material-symbols:school-outline" class="title-icon" />
       <span class="title-text">TTS-Exercises</span>
-    </nuxt-link>
+    </NuxtLink>
     <UserMenu />
   </header>
 </template>

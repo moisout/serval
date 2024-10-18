@@ -28,7 +28,6 @@ const textColor = computed(() => {
 .icon-button-outer {
   border: solid 1px transparent;
   padding: 5px 5px 2px 5px;
-  margin: auto 0;
   border-radius: 4px;
   cursor: pointer;
   color: v-bind(textColor);

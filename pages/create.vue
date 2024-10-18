@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { v4 } from 'uuid'
+
+const router = useRouter()
 const { data } = useAuth()
 
 const exercise = reactive<Exercise>({
+  id: v4(),
   name: 'Neues Aufgabenbuch',
   topic: 'z.B. Mathe',
   author: data.value?.username || 'Unbekannt',
@@ -9,10 +13,12 @@ const exercise = reactive<Exercise>({
 })
 
 const saveExercise = async () => {
-  $fetch('/api/exercises', {
+  await $fetch('/api/exercises', {
     method: 'POST',
     body: exercise
   })
+
+  router.push('/')
 }
 </script>
 

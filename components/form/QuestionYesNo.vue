@@ -49,14 +49,17 @@ const moveQuestionDown = () => {
       <FormEditable class="question" v-model="questionTitle" />
       <div class="question-actions">
         <IconButton
+          class="question-action"
           icon="material-symbols:arrow-upward"
           @click="moveQuestionUp"
         />
         <IconButton
+          class="question-action"
           icon="material-symbols:arrow-downward"
           @click="moveQuestionDown"
         />
         <IconButton
+          class="question-action"
           icon="material-symbols:delete-rounded"
           @click="deleteQuestion"
           :color="danger"
@@ -144,6 +147,10 @@ const moveQuestionDown = () => {
     .question-actions {
       display: flex;
       gap: 5px;
+
+      .question-action {
+        margin: auto 0;
+      }
     }
   }
 

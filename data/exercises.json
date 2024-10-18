@@ -1,0 +1,62 @@
+[
+  {
+    "id": "407a15fa-eab8-41c9-a34a-a06d51fd92ab",
+    "name": "Neues Aufgabenbuch asdfasd",
+    "topic": "z.B. Mathe",
+    "author": "admin",
+    "questions": [
+      {
+        "id": "c67607e7-fa03-4b73-b0fa-65191d78b845",
+        "type": "yes-no",
+        "question": "Neue Frage",
+        "correctAnswer": "yes"
+      },
+      {
+        "id": "e3ef6b47-9471-4d89-8758-22dbbb891d42",
+        "type": "yes-no",
+        "question": "Neue Frage",
+        "correctAnswer": "yes"
+      }
+    ]
+  },
+  {
+    "id": "1d4c161c-3f31-49cb-b1e5-386145913118",
+    "name": "Tiere",
+    "topic": "Natur",
+    "author": "admin",
+    "questions": [
+      {
+        "id": "e11ae324-ba76-407d-b588-68b9f9d72ee8",
+        "type": "yes-no",
+        "question": "Können Hunde fliegen?",
+        "correctAnswer": "no"
+      },
+      {
+        "id": "73684e62-c5fb-4b73-83cd-690de1e509b0",
+        "type": "yes-no",
+        "question": "Macht die Katze Miau?",
+        "correctAnswer": "yes"
+      }
+    ]
+  },
+  {
+    "id": "307a057a-1f5a-49dc-b2be-36ef05192e9b",
+    "name": "Affe",
+    "topic": "NMG",
+    "author": "admin",
+    "questions": [
+      {
+        "id": "a9f7a21f-4f7d-4f1e-a31f-74d97dbb1484",
+        "type": "yes-no",
+        "question": "Die Banane ist krumm",
+        "correctAnswer": "yes"
+      },
+      {
+        "id": "db51e479-f77d-4e3d-a1c7-e2a191149d51",
+        "type": "yes-no",
+        "question": "Kann eine Katze fliegen?",
+        "correctAnswer": "no"
+      }
+    ]
+  }
+]

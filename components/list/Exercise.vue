@@ -17,7 +17,7 @@ const topicText = computed(() => props.exercise.topic?.slice(0, 10))
 </script>
 
 <template>
-  <div class="exercise">
+  <NuxtLink class="exercise" :to="`/exercise/${exercise.id}`">
     <p class="exercise-name">{{ exercise.name }}</p>
 
     <p class="exercise-author">{{ exercise.author }}</p>
@@ -25,7 +25,7 @@ const topicText = computed(() => props.exercise.topic?.slice(0, 10))
       <span>{{ topicText }}</span
       ><span> {{ questionsText }}</span>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <style lang="scss" scoped>
@@ -37,6 +37,7 @@ const topicText = computed(() => props.exercise.topic?.slice(0, 10))
   border: 1px solid transparent;
   box-shadow: 0 1px 4px 0 #{globals.$primary}3a;
   position: relative;
+  text-decoration: none;
 
   &:hover {
     border: 1px solid globals.$primary;
@@ -45,6 +46,7 @@ const topicText = computed(() => props.exercise.topic?.slice(0, 10))
   .exercise-name {
     font-size: 1.2rem;
     font-weight: 600;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     margin-bottom: 5px;

@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { v4 } from 'uuid'
+
 const props = defineProps<{ exercise: Exercise }>()
 
 const exercise = toRef(props, 'exercise')
 
 const addQuestion = () => {
   exercise.value.questions.push({
-    id: (Math.random() * 10000).toString(),
+    id: v4(),
     type: 'yes-no',
     question: 'Neue Frage',
     correctAnswer: 'yes'

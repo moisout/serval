@@ -2,6 +2,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
 
+  app: {
+    head: {
+      title: 'TTS-Exercises'
+    }
+  },
+
   auth: {
     baseURL: '/api/auth',
     provider: {
@@ -22,20 +28,7 @@ export default defineNuxtConfig({
         getSession: { path: '/session', method: 'get' }
       }
     },
-    globalAppMiddleware: true,
-    sessionRefresh: {
-      enableOnWindowFocus: true,
-      enablePeriodically: 60 * 1000
-    }
-  },
-
-  nitro: {
-    storage: {
-      fs: {
-        driver: 'fs',
-        base: './data'
-      }
-    }
+    globalAppMiddleware: true
   },
 
   vite: {

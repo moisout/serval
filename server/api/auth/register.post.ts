@@ -1,5 +1,6 @@
-import { UserLogin } from '~/utils/UserLogin'
 import { DbUser } from '~/utils/DbUser'
+import { UserLogin } from '~/utils/UserLogin'
+import { v4 } from 'uuid'
 import { getStorage } from '~/server/utils/storage'
 
 export default defineEventHandler(async (event) => {
@@ -18,28 +19,26 @@ export default defineEventHandler(async (event) => {
 
   const existingUser = users.find((user) => user.username === body.username)
 
-  if (!existingUser) {
-    setResponseStatus(event, 401)
+  if (existingUser) {
+    setResponseStatus(event, 400)
     return {
       success: false,
-      message: 'User not found'
+      message: 'User already exists'
     }
   }
 
-  const validPassword = await comparePassword(
-    body.password,
-    existingUser!.password
-  )
-  if (!validPassword) {
-    setResponseStatus(event, 401)
-    return {
-      success: false,
-      message: 'Invalid password'
-    }
+  const newUser: DbUser = {
+    id: v4(),
+    username: body.username,
+    password: await hashPassword(body.password),
+    role: 'student',
+    authToken: v4()
   }
+
+  await storage.set('users', [...users, newUser])
 
   return {
     success: true,
-    token: existingUser?.authToken
+    token: newUser.authToken
   }
 })

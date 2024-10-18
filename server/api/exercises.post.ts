@@ -1,9 +1,10 @@
 import { Exercise } from '~/utils/Exercise'
+import { getStorage } from '../utils/storage'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<Exercise>(event)
 
-  const storage = useStorage('data')
+  const storage = getStorage()
 
   if (body) {
     const exercises = await storage.get<Exercise[]>('exercises')
