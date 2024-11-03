@@ -8,6 +8,10 @@ export default defineNuxtConfig({
     }
   },
 
+  future: {
+    compatibilityVersion: 4
+  },
+
   auth: {
     baseURL: '/api/auth',
     provider: {

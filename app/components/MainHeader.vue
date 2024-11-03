@@ -33,6 +33,10 @@ header {
       font-weight: bold;
       font-size: 1.4rem;
       margin: auto 0;
+
+      @media screen and (max-width: 400px) {
+        display: none;
+      }
     }
 
     .title-icon {

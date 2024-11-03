@@ -5,5 +5,12 @@
     "password": "$2a$10$CqcTGF69VCPE9Itns28jyekn5hTG6OES.u7UzyP68JtucIagvLUJC",
     "role": "student",
     "authToken": "7339a59e-9ea9-4f9f-8220-8640ac18fc1f"
+  },
+  {
+    "id": "9f9b4b03-a0ae-4e76-8522-f80e2826f61a",
+    "username": "schüler1",
+    "password": "$2a$10$920qWEVeEMUy1YFl3E0rfOLEYuZzMhG8/mxiEhup8B940Gaw7ftTC",
+    "role": "student",
+    "authToken": "1716ca08-4375-4798-9fc8-caffbc00ed43"
   }
 ]

@@ -16,6 +16,9 @@ body,
 .layout-exercise {
   margin: 0;
   padding: 0;
+}
+
+.layout-exercise {
   height: 100%;
   width: 100%;
 }

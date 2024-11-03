@@ -1,6 +1,6 @@
 import { UserLogin } from '~/utils/UserLogin'
 import { DbUser } from '~/utils/DbUser'
-import { getStorage } from '~/server/utils/storage'
+import { getStorage } from '~~/server/utils/storage'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<UserLogin>(event)

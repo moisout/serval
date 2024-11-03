@@ -1,4 +1,4 @@
-import { getStorage } from '~/server/utils/storage'
+import { getStorage } from '~~/server/utils/storage'
 import { DbUser } from '~/utils/DbUser'
 
 export default defineEventHandler(async (event) => {
