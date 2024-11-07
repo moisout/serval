@@ -4,12 +4,17 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'TTS-Exercises'
+      title: 'serval',
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
     }
   },
 
   future: {
     compatibilityVersion: 4
+  },
+
+  hub: {
+    database: true
   },
 
   auth: {
@@ -49,5 +54,5 @@ export default defineNuxtConfig({
     }
   },
 
-  modules: ['@nuxt/icon', '@nuxt/fonts', '@sidebase/nuxt-auth']
+  modules: ['@nuxt/icon', '@nuxt/fonts', '@sidebase/nuxt-auth', '@nuxthub/core']
 })

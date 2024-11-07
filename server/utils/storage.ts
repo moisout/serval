@@ -18,6 +18,10 @@ export const getStorage = () => {
   const set = async <T>(key: string, value: T) => {
     const path = resolve(`./data/${key}.json`)
 
+    if (!existsSync(path)) {
+      await fsp.writeFile(path, '[]')
+    }
+
     await fsp.writeFile(path, JSON.stringify(value, null, 2))
 
     return true

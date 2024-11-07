@@ -2,7 +2,8 @@
 const config = {
   singleQuote: true,
   trailingComma: 'none',
-  semi: false
+  semi: false,
+  plugins: ['prettier-plugin-organize-imports']
 }
 
 export default config

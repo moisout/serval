@@ -1,12 +1,8 @@
 import { UserLogin } from '~/utils/UserLogin'
-import { DbUser } from '~/utils/DbUser'
-import { getStorage } from '~~/server/utils/storage'
+import { users } from '~~/server/database/schema'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<UserLogin>(event)
-
-  const storage = getStorage()
-  const users = (await storage.get<DbUser[]>('users')) || []
 
   if (!body.username || !body.password) {
     setResponseStatus(event, 400)
@@ -15,8 +11,11 @@ export default defineEventHandler(async (event) => {
       message: 'Invalid request'
     }
   }
+  const drizzle = useDrizzle()
 
-  const existingUser = users.find((user) => user.username === body.username)
+  const existingUser = await drizzle.query.users.findFirst({
+    where: eq(users.username, body.username)
+  })
 
   if (!existingUser) {
     setResponseStatus(event, 401)
@@ -28,7 +27,7 @@ export default defineEventHandler(async (event) => {
 
   const validPassword = await comparePassword(
     body.password,
-    existingUser!.password
+    existingUser.password
   )
   if (!validPassword) {
     setResponseStatus(event, 401)
@@ -40,6 +39,6 @@ export default defineEventHandler(async (event) => {
 
   return {
     success: true,
-    token: existingUser?.authToken
+    token: existingUser.authToken
   }
 })

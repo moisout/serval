@@ -1,8 +1,8 @@
 <template>
   <header>
     <NuxtLink to="/" class="title">
-      <Icon name="material-symbols:school-outline" class="title-icon" />
-      <span class="title-text">TTS-Exercises</span>
+      <img src="~/assets/icons/temp.png" class="title-icon" />
+      <span class="title-text">serval</span>
     </NuxtLink>
     <UserMenu />
   </header>

@@ -1,5 +1,5 @@
+import { users } from '~~/server/database/schema'
 import { getStorage } from '~~/server/utils/storage'
-import { DbUser } from '~/utils/DbUser'
 
 export default defineEventHandler(async (event) => {
   const auth = event.headers.get('Authorization')
@@ -14,11 +14,11 @@ export default defineEventHandler(async (event) => {
       error: 'Unauthorized'
     }
   }
+  const drizzle = useDrizzle()
 
-  const storage = getStorage()
-
-  const users = (await storage.get<DbUser[]>('users')) || []
-  const user = users.find((user) => user.authToken === authToken)
+  const user = await drizzle.query.users.findFirst({
+    where: eq(users.authToken, authToken)
+  })
 
   if (!user) {
     setResponseStatus(event, 401)
