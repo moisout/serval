@@ -17,6 +17,12 @@ export default defineNuxtConfig({
     database: true
   },
 
+  nitro: {
+    experimental: {
+      openAPI: true
+    }
+  },
+
   auth: {
     baseURL: '/api/auth',
     provider: {
