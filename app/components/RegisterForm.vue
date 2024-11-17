@@ -1,13 +1,18 @@
 <script setup lang="ts">
 const username = ref('')
 const password = ref('')
+const accessCode = ref('')
 
 const { signUp } = useAuth()
 
 const register = async () => {
   try {
     await signUp(
-      { username: username.value, password: password.value },
+      {
+        username: username.value,
+        password: password.value,
+        accessCode: accessCode.value
+      },
       { callbackUrl: '/' }
     )
   } catch {
@@ -23,6 +28,7 @@ const error = ref('')
     <div class="error" v-if="error">{{ error }}</div>
     <FormInput type="text" v-model="username" label="Benutzername" />
     <FormInput type="password" v-model="password" label="Passwort" />
+    <FormInput type="text" v-model="accessCode" label="Zugangscode" />
     <PrimaryButton type="submit" text="Registrieren" filled />
     <NuxtLink to="/login" class="login-link"> Stadtdessen einloggen </NuxtLink>
   </form>
