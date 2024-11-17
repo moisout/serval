@@ -14,11 +14,23 @@ export const users = sqliteTable('users', {
     .default(sql`(unixepoch())`)
 })
 
+export const accessCodes = sqliteTable('access_codes', {
+  id: text('id').primaryKey(),
+  code: text('code').notNull(),
+  role: text('role').$type<Role>().notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp' })
+    .notNull()
+    .default(sql`(unixepoch())`)
+})
+
 export const exercises = sqliteTable('exercises', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
   authorId: text('author_id').notNull(),
-  topic: text('topic').notNull()
+  topic: text('topic').notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp' })
+    .notNull()
+    .default(sql`(unixepoch())`)
 })
 
 export const exercisesRelations = relations(exercises, ({ one }) => ({
@@ -33,7 +45,10 @@ export const questions = sqliteTable('questions', {
   order: integer('order').notNull(),
   exerciseId: text('exercise_id').notNull(),
   question: text('question').notNull(),
-  answer: text('answer').notNull()
+  answer: text('answer').notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp' })
+    .notNull()
+    .default(sql`(unixepoch())`)
 })
 
 export const questionsRelations = relations(questions, ({ one }) => ({

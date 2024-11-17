@@ -1,6 +1,8 @@
 import { Exercise } from '~/utils/Exercise'
 
 export default defineEventHandler(async (event) => {
+  await requireUserSession(event)
+
   const exerciseId = getRouterParam(event, 'id')
   const storage = getStorage()
 

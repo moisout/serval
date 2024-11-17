@@ -2,6 +2,7 @@ import { Exercise } from '~/utils/Exercise'
 import { getStorage } from '../utils/storage'
 
 export default defineEventHandler(async (event) => {
+  await requireTeacherSession(event)
   const body = await readBody<Exercise>(event)
 
   const storage = getStorage()
