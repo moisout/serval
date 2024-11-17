@@ -1,21 +1,23 @@
 import { Exercise } from '~/utils/Exercise'
-import { getStorage } from '../utils/storage'
+import { exercises } from '../database/schema'
 
 export default defineEventHandler(async (event) => {
-  await requireTeacherSession(event)
+  const session = await requireTeacherSession(event)
+
   const body = await readBody<Exercise>(event)
 
-  const storage = getStorage()
+  const drizzle = useDrizzle()
 
-  if (body) {
-    const exercises = await storage.get<Exercise[]>('exercises')
-
-    if (!exercises) {
-      await storage.set('exercises', [body])
-    } else {
-      await storage.set('exercises', [...exercises, body])
-    }
-
-    return body
+  if (!body) {
+    throw createError({ statusCode: 400, message: 'Missing exercise body' })
   }
+
+  await drizzle.insert(exercises).values({
+    authorId: session.id,
+    id: body.id,
+    name: body.name,
+    topic: body.topic
+  })
+
+  return body
 })

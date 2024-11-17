@@ -1,14 +1,19 @@
-import { Exercise } from '~/utils/Exercise'
+import { exercises } from '~~/server/database/schema'
 
 export default defineEventHandler(async (event) => {
   await requireUserSession(event)
 
   const exerciseId = getRouterParam(event, 'id')
-  const storage = getStorage()
 
-  const exercises = await storage.get<Exercise[]>('exercises')
+  if (!exerciseId) {
+    throw createError({ statusCode: 400, message: 'Missing exercise id' })
+  }
 
-  const exercise = exercises?.find((exercise) => exercise.id === exerciseId)
+  const drizzle = useDrizzle()
+
+  const exercise = await drizzle.query.exercises.findFirst({
+    where: eq(exercises.id, exerciseId)
+  })
 
   if (!exercise) {
     setResponseStatus(event, 404)
