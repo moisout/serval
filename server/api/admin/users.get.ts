@@ -1,13 +1,17 @@
-import { DbUser } from '~/utils/DbUser'
+import { requireTeacherSession } from '~~/server/utils/requireTeacherSession'
 
 export default defineEventHandler(async (event) => {
-  const storage = getStorage()
+  const session = await requireTeacherSession(event)
 
-  const users = await storage.get<DbUser[]>('users')
+  const drizzle = useDrizzle()
 
-  return users?.map((user) => ({
-    id: user.id,
-    username: user.username,
-    role: user.role
-  }))
+  const users = await drizzle.query.users.findMany()
+
+  return (
+    users?.map((user) => ({
+      id: user.id,
+      username: user.username,
+      role: user.role
+    })) || []
+  )
 })

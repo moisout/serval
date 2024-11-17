@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const { data: users } = useFetch('/api/admin/users')
+const headers = useRequestHeaders(['cookie'])
+const { data: users } = useFetch('/api/admin/users', {
+  headers,
+  credentials: 'include'
+})
 </script>
 
 <template>
