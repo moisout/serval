@@ -10,14 +10,14 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: globals.$font-primary;
   background-color: globals.$bg-primary;
 }
 
 p,
 span {
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: globals.$font-primary;
 }
 
 a {

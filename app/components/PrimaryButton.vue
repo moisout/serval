@@ -5,6 +5,7 @@ withDefaults(
     to?: string
     type?: 'link' | 'submit' | 'button'
     filled?: boolean
+    light?: boolean
   }>(),
   {
     type: 'link',
@@ -26,25 +27,34 @@ const onClick = () => {
     v-if="type === 'link'"
     :to="to"
     class="primary-button"
-    :class="{ filled }"
-    >{{ text }}</NuxtLink
-  >
+    :class="{ filled, light }"
+    >{{ text }}
+    <div class="icon-after">
+      <slot name="icon-after" />
+    </div>
+  </NuxtLink>
   <button
     v-else-if="type === 'submit'"
     type="submit"
     class="primary-button"
-    :class="{ filled }"
+    :class="{ filled, light }"
   >
     {{ text }}
+    <div class="icon-after">
+      <slot name="icon-after" class="icon-after" />
+    </div>
   </button>
   <button
     v-else
     type="button"
     class="primary-button"
-    :class="{ filled }"
+    :class="{ filled, light }"
     @click="onClick"
   >
     {{ text }}
+    <div class="icon-after">
+      <slot name="icon-after" class="icon-after" />
+    </div>
   </button>
 </template>
 
@@ -63,7 +73,22 @@ const onClick = () => {
   height: 40px;
   line-height: 40px;
   text-align: center;
-  display: inline-block;
+  display: flex;
+  gap: 5px;
+  font-family: globals.$font-primary;
+
+  .icon-after {
+    display: flex;
+    :deep(span) {
+      display: block;
+      margin: auto 0;
+    }
+  }
+
+  &.light {
+    border: none;
+    box-shadow: none;
+  }
 
   &.filled {
     background-color: globals.$primary;

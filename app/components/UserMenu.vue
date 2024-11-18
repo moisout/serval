@@ -4,13 +4,20 @@ const { data, status, signOut } = useAuth()
 
 <template>
   <div class="user-menu" v-if="status === 'authenticated'">
-    <p class="user-name">{{ data?.username }}</p>
+    <p class="user-name">
+      <Icon name="material-symbols:person" /> {{ data?.username }}
+    </p>
+    <PrimaryButton text="Manage" light type="link" to="/admin" />
     <PrimaryButton
       text="Logout"
+      light
       type="button"
-      filled
       @click="signOut({ callbackUrl: '/login' })"
-    />
+    >
+      <template v-slot:icon-after>
+        <Icon name="material-symbols:logout" />
+      </template>
+    </PrimaryButton>
   </div>
 </template>
 
@@ -21,7 +28,12 @@ const { data, status, signOut } = useAuth()
   gap: 10px;
 
   .user-name {
-    margin: auto 0;
+    display: flex;
+    margin: auto 10px;
+
+    span {
+      margin: auto 5px auto 0;
+    }
   }
 }
 </style>

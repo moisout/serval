@@ -106,7 +106,7 @@ const textWidth = computed(() => {
     padding: 5px;
     border: 1px solid globals.$gray-300;
     border-radius: 5px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: globals.$font-primary;
 
     &:focus-within {
       border-color: globals.$primary;

@@ -23,6 +23,10 @@ export default defineNuxtConfig({
     }
   },
 
+  routeRules: {
+    '/admin': { redirect: '/admin/users' }
+  },
+
   auth: {
     baseURL: '/api/auth',
     provider: {

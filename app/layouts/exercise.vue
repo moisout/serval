@@ -7,7 +7,7 @@
 <style lang="scss">
 html {
   background-color: globals.$bg-primary;
-  font-family: 'Montserrat', sans-serif;
+  font-family: globals.$font-primary;
 }
 
 html,
@@ -26,7 +26,7 @@ body,
 p,
 span {
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: globals.$font-primary;
 }
 
 a {
