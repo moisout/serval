@@ -1,8 +1,10 @@
 <template>
-  <MainHeader />
-  <div class="layout-default">
-    <slot />
-  </div>
+  <n-config-provider :theme-overrides="themeOverrides">
+    <MainHeader />
+    <div class="layout-default">
+      <slot />
+    </div>
+  </n-config-provider>
 </template>
 
 <style lang="scss">

@@ -21,9 +21,20 @@ const error = ref('')
 <template>
   <form @submit.prevent="login" class="login-form">
     <div class="error" v-if="error">{{ error }}</div>
-    <FormInput type="text" v-model="username" label="Benutzername" />
-    <FormInput type="password" v-model="password" label="Passwort" />
-    <PrimaryButton type="submit" text="Login" filled />
+    <n-input
+      type="text"
+      placeholder="Benutzername"
+      v-model:value="username"
+      size="large"
+    />
+    <n-input
+      type="password"
+      placeholder="Passwort"
+      show-password-on="click"
+      v-model:value="password"
+      size="large"
+    />
+    <n-button type="primary" attr-type="submit" size="large">Login</n-button>
     <NuxtLink to="/register" class="register-link">
       Neuen Account erstellen
     </NuxtLink>

@@ -29,9 +29,13 @@
     "@sidebase/nuxt-auth": "0.9.4",
     "bcryptjs": "2.4.3",
     "drizzle-orm": "0.36.3",
+    "naive-ui": "^2.40.1",
     "nuxt": "3.14.159",
+    "nuxtjs-naive-ui": "1.0.2",
     "sass": "1.81.0",
     "unenv": "1.10.0",
+    "unplugin-auto-import": "0.18.5",
+    "unplugin-vue-components": "0.27.4",
     "uuid": "11.0.3",
     "vue": "3.5.13",
     "vue-router": "4.4.5"

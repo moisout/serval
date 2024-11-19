@@ -15,7 +15,8 @@ const exercise = reactive<Exercise>({
 const saveExercise = async () => {
   await $fetch('/api/exercises', {
     method: 'POST',
-    body: exercise
+    body: exercise,
+    credentials: 'include'
   })
 
   router.push('/')
