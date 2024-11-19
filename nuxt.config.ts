@@ -38,7 +38,8 @@ export default defineNuxtConfig({
       session: {
         dataType: {
           id: 'string',
-          username: 'string'
+          username: 'string',
+          role: 'string'
         }
       },
       token: {

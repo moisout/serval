@@ -1,9 +1,13 @@
 <template>
   <n-config-provider :theme-overrides="themeOverrides">
-    <MainHeader />
-    <div class="layout-default">
-      <slot />
-    </div>
+    <n-dialog-provider>
+      <n-message-provider>
+        <MainHeader />
+        <div class="layout-default">
+          <slot />
+        </div>
+      </n-message-provider>
+    </n-dialog-provider>
   </n-config-provider>
 </template>
 

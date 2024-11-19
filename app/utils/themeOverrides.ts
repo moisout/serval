@@ -6,5 +6,7 @@ export const themeOverrides: GlobalThemeOverrides = {
     primaryColorHover: '#d8574e',
     primaryColorPressed: '#d8574e',
     primaryColorSuppl: '#f7786b',
-  }
+    borderRadius: '5px'
+  },
+  Dialog: {}
 }
