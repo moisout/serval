@@ -1,15 +1,15 @@
 <template>
-  <header>
+  <div class="main-header">
     <NuxtLink to="/" class="title">
       <img src="~/assets/icons/temp.png" class="title-icon" />
       <span class="title-text">serval</span>
     </NuxtLink>
     <UserMenu />
-  </header>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-header {
+.main-header {
   position: absolute;
   top: 0;
   width: 100%;

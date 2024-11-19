@@ -3,12 +3,16 @@ const { data: exercises } = useFetch('/api/exercises')
 </script>
 
 <template>
-  <TitleBox>
-    <div class="home-title-section">
-      <p class="home-title">Aufgabenbücher</p>
-      <PrimaryButton to="/create" text="Aufgabenbuch erstellen" />
-    </div>
-  </TitleBox>
+  <n-page-header>
+    <template #title> Aufgabenbücher </template>
+    <template #extra>
+      <n-space>
+        <NuxtLink to="/create">
+          <n-button><template v-slot:icon><Icon name="material-symbols:add-notes-outline-rounded" /></template>Aufgabenbuch erstellen</n-button>
+        </NuxtLink>
+      </n-space>
+    </template>
+  </n-page-header>
   <div class="exercises">
     <ListExercise
       v-for="(exercise, index) in exercises"
@@ -19,21 +23,6 @@ const { data: exercises } = useFetch('/api/exercises')
 </template>
 
 <style lang="scss" scoped>
-.home-title-section {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  z-index: 10;
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-
-  .home-title {
-    font-size: 1.8rem;
-  }
-}
-
 .exercises {
   position: relative;
   z-index: 10;

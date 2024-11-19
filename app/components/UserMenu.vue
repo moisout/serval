@@ -52,7 +52,7 @@ const logout = () => {
     align-items: center;
     gap: 10px;
 
-    .user-icon {
+    :deep(.user-icon) {
       font-size: 2rem;
       color: globals.$gray-700;
     }

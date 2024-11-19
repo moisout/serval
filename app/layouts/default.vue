@@ -2,6 +2,9 @@
   <n-config-provider :theme-overrides="themeOverrides">
     <n-dialog-provider>
       <n-message-provider>
+        <n-loading-bar-provider>
+          <LoadingBar />
+        </n-loading-bar-provider>
         <MainHeader />
         <div class="layout-default">
           <slot />
@@ -18,6 +21,8 @@ body {
   padding: 0;
   font-family: globals.$font-primary;
   background-color: globals.$bg-primary;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 p,
@@ -39,6 +44,10 @@ a {
 }
 
 .layout-default {
-  margin: globals.$header-height 0 0 0;
+  margin: globals.$header-height auto 0 auto;
+  padding: 20px;
+  z-index: 10;
+  width: 100%;
+  max-width: 900px;
 }
 </style>

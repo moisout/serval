@@ -4,6 +4,8 @@ import { v4 } from 'uuid'
 const router = useRouter()
 const { data } = useAuth()
 
+const dialog = useDialog()
+
 const exercise = reactive<Exercise>({
   id: v4(),
   name: 'Neues Aufgabenbuch',
@@ -21,15 +23,42 @@ const saveExercise = async () => {
 
   router.push('/')
 }
+
+const warnLeave = () => {
+  dialog.warning({
+    title: 'Aufgabenbuch nicht gespeichert',
+    content:
+      'Möchtest du das Aufgabenbuch verlassen? Deine Eingaben werden nicht gespeichert.',
+    positiveText: 'Abbrechen',
+    negativeText: 'Ja, verlassen',
+    onNegativeClick: () => router.push('/'),
+    negativeButtonProps: {
+      size: 'large'
+    },
+    positiveButtonProps: {
+      size: 'large'
+    }
+  })
+}
 </script>
 
 <template>
-  <TitleBox>
-    <div class="create-title-section">
-      <p class="create-title">Aufgabenbuch erstellen</p>
-      <PrimaryButton type="button" text="Speichern" @click="saveExercise" />
-    </div>
-  </TitleBox>
+  <n-page-header @back="warnLeave">
+    <template #title>Aufgabenbuch erstellen</template>
+    <template #header>
+      <n-breadcrumb>
+        <n-breadcrumb-item href="/" @click.stop.prevent="warnLeave">
+          Aufgabenbücher
+        </n-breadcrumb-item>
+        <n-breadcrumb-item>{{ exercise.name }}</n-breadcrumb-item>
+      </n-breadcrumb>
+    </template>
+    <template #extra>
+      <n-space>
+        <n-button type="primary" @click="saveExercise">Speichern</n-button>
+      </n-space>
+    </template>
+  </n-page-header>
   <div class="create-outer">
     <div class="create">
       <CreateForm :exercise="exercise" />
