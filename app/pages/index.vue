@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { NPageHeader, NSpace, NButton } from 'naive-ui';
 const { data: exercises } = useFetch('/api/exercises')
 </script>
 

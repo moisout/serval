@@ -4,33 +4,45 @@ import {
   NBreadcrumb,
   NBreadcrumbItem,
   NSpace,
-  NButton
+  NButton,
+  useDialog
 } from 'naive-ui'
 
-import { v4 } from 'uuid'
-import { useDialog } from 'naive-ui'
-
 const router = useRouter()
+const route = useRoute()
 const { data } = useAuth()
 
 const dialog = useDialog()
 
-const exercise = reactive<Exercise>({
-  id: v4(),
-  name: 'Neues Aufgabenbuch',
-  topic: 'z.B. Mathe',
-  author: data.value?.username || 'Unbekannt',
-  questions: []
+const exercise = ref<Exercise>()
+
+onMounted(async () => {
+  await $fetch(`/api/exercises/${route.params.id}`, {
+    method: 'GET',
+    credentials: 'include'
+  })
+    .then((res) => {
+      if (!(res as any).error) {
+        exercise.value = res as unknown as Exercise
+
+        if (!exercise.value?.questions) {
+          exercise.value.questions = []
+        }
+      }
+    })
+    .catch((err) => {
+      console.error(err)
+    })
 })
 
 const saveExercise = async () => {
-  await $fetch('/api/exercises', {
-    method: 'POST',
-    body: exercise,
+  await $fetch(`/api/exercises/${exercise.value?.id}`, {
+    method: 'PUT' as any,
+    body: exercise.value,
     credentials: 'include'
   })
 
-  router.push('/')
+  router.push(`/exercise/${exercise.value?.id}`)
 }
 
 const warnLeave = () => {
@@ -53,13 +65,13 @@ const warnLeave = () => {
 
 <template>
   <n-page-header @back="warnLeave">
-    <template #title>Aufgabenbuch erstellen</template>
+    <template #title>Aufgabenbuch bearbeiten</template>
     <template #header>
       <n-breadcrumb>
         <n-breadcrumb-item href="/" @click.stop.prevent="warnLeave">
           Aufgabenbücher
         </n-breadcrumb-item>
-        <n-breadcrumb-item>{{ exercise.name }}</n-breadcrumb-item>
+        <n-breadcrumb-item>{{ exercise?.name }}</n-breadcrumb-item>
       </n-breadcrumb>
     </template>
     <template #extra>
@@ -68,7 +80,7 @@ const warnLeave = () => {
       </n-space>
     </template>
   </n-page-header>
-  <div class="create-outer">
+  <div class="create-outer" v-if="exercise">
     <div class="create">
       <CreateForm :exercise="exercise" />
     </div>

@@ -4,12 +4,12 @@ const props = defineProps<{
 }>()
 
 const questionsText = computed(() => {
-  if (props.exercise.questions?.length === 0) {
+  if (!props.exercise.questionCount) {
     return 'Keine Fragen'
-  } else if (props.exercise.questions?.length === 1) {
-    return `${props.exercise.questions?.length} Frage`
+  } else if (props.exercise.questionCount === 1) {
+    return `${props.exercise.questionCount} Frage`
   } else {
-    return `${props.exercise.questions?.length} Fragen`
+    return `${props.exercise.questionCount} Fragen`
   }
 })
 

@@ -1,6 +1,6 @@
 import { v4 } from 'uuid'
 import { UserRegistration } from '~/utils/UserRegistration'
-import { accessCodes, users } from '~~/server/database/schema'
+import { accessCodesTable, usersTable } from '~~/server/database/schema'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<UserRegistration>(event)
@@ -14,8 +14,8 @@ export default defineEventHandler(async (event) => {
 
   const drizzle = useDrizzle()
 
-  const accessCode = await drizzle.query.accessCodes.findFirst({
-    where: eq(accessCodes.code, body.accessCode)
+  const accessCode = await drizzle.query.accessCodesTable.findFirst({
+    where: eq(accessCodesTable.code, body.accessCode)
   })
 
   if (!accessCode) {
@@ -25,8 +25,8 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const existingUser = await drizzle.query.users.findFirst({
-    where: eq(users.username, body.username)
+  const existingUser = await drizzle.query.usersTable.findFirst({
+    where: eq(usersTable.username, body.username)
   })
 
   if (existingUser) {
@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
 
   const authToken = v4()
 
-  await drizzle.insert(users).values({
+  await drizzle.insert(usersTable).values({
     id: v4(),
     username: body.username,
     password: await hashPassword(body.password),

@@ -1,10 +1,14 @@
+<script setup lang="ts">
+import { NConfigProvider, NDialogProvider, NMessageProvider } from 'naive-ui'
+</script>
+
 <template>
   <n-config-provider :theme-overrides="themeOverrides">
     <n-dialog-provider>
       <n-message-provider>
-        <n-loading-bar-provider>
+        <!-- <n-loading-bar-provider>
           <LoadingBar />
-        </n-loading-bar-provider>
+        </n-loading-bar-provider> -->
         <MainHeader />
         <div class="layout-default">
           <slot />

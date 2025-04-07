@@ -1,5 +1,5 @@
 import { H3Event } from 'h3'
-import { users } from '~~/server/database/schema'
+import { usersTable } from '~~/server/database/schema'
 
 export const verifySession = async (event: H3Event) => {
   const auth = event.headers.get('Authorization')
@@ -18,8 +18,8 @@ export const verifySession = async (event: H3Event) => {
   }
   const drizzle = useDrizzle()
 
-  const user = await drizzle.query.users.findFirst({
-    where: eq(users.authToken, authToken)
+  const user = await drizzle.query.usersTable.findFirst({
+    where: eq(usersTable.authToken, authToken)
   })
 
   if (!user) {

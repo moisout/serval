@@ -3,7 +3,7 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
 type Role = 'teacher' | 'student'
 
-export const users = sqliteTable('users', {
+export const usersTable = sqliteTable('users', {
   id: text('id').primaryKey(),
   username: text('username').notNull(),
   role: text('role').$type<Role>().notNull(),
@@ -14,7 +14,7 @@ export const users = sqliteTable('users', {
     .default(sql`(unixepoch())`)
 })
 
-export const accessCodes = sqliteTable('access_codes', {
+export const accessCodesTable = sqliteTable('access_codes', {
   id: text('id').primaryKey(),
   code: text('code').notNull(),
   role: text('role').$type<Role>().notNull(),
@@ -23,37 +23,23 @@ export const accessCodes = sqliteTable('access_codes', {
     .default(sql`(unixepoch())`)
 })
 
-export const exercises = sqliteTable('exercises', {
+export const exercisesTable = sqliteTable('exercises', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
-  authorId: text('author_id').notNull(),
+  authorId: text('author_id').notNull().references(() => usersTable.id),
   topic: text('topic').notNull(),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
     .default(sql`(unixepoch())`)
 })
 
-export const exercisesRelations = relations(exercises, ({ one }) => ({
-  author: one(users, {
-    fields: [exercises.authorId],
-    references: [users.id]
-  })
-}))
-
-export const questions = sqliteTable('questions', {
+export const questionsTable = sqliteTable('questions', {
   id: text('id').primaryKey(),
-  order: integer('order').notNull(),
-  exerciseId: text('exercise_id').notNull(),
+  // order: integer('order').notNull(),
+  exerciseId: text('exercise_id').notNull().references(() => exercisesTable.id),
   question: text('question').notNull(),
-  answer: text('answer').notNull(),
+  correctAnswer: text('correctAnswer').notNull(),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
     .default(sql`(unixepoch())`)
 })
-
-export const questionsRelations = relations(questions, ({ one }) => ({
-  exercise: one(exercises, {
-    fields: [questions.exerciseId],
-    references: [exercises.id]
-  })
-}))

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { NInput, NButton } from 'naive-ui'
 const username = ref('')
 const password = ref('')
 

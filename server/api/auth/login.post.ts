@@ -1,5 +1,5 @@
 import { UserLogin } from '~/utils/UserLogin'
-import { users } from '~~/server/database/schema'
+import { usersTable } from '~~/server/database/schema'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<UserLogin>(event)
@@ -13,8 +13,8 @@ export default defineEventHandler(async (event) => {
   }
   const drizzle = useDrizzle()
 
-  const existingUser = await drizzle.query.users.findFirst({
-    where: eq(users.username, body.username)
+  const existingUser = await drizzle.query.usersTable.findFirst({
+    where: eq(usersTable.username, body.username)
   })
 
   if (!existingUser) {

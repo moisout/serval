@@ -1,5 +1,5 @@
 import { Exercise } from '~/utils/Exercise'
-import { exercises } from '../database/schema'
+import { exercisesTable } from '../database/schema'
 
 export default defineEventHandler(async (event) => {
   const session = await requireTeacherSession(event)
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, message: 'Missing exercise body' })
   }
 
-  await drizzle.insert(exercises).values({
+  await drizzle.insert(exercisesTable).values({
     authorId: session.id,
     id: body.id,
     name: body.name,

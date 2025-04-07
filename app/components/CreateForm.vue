@@ -23,18 +23,24 @@ const deleteQuestion = (question: Question) => {
 const moveQuestionUp = (question: Question) => {
   const index = exercise.value.questions.findIndex((q) => q.id === question.id)
   if (index > 0) {
-    const temp = exercise.value.questions[index - 1]
-    exercise.value.questions[index - 1] = exercise.value.questions[index]
-    exercise.value.questions[index] = temp
+    const tempQuestionAbove = exercise.value.questions[index - 1]
+    const tempQuestionBelow = exercise.value.questions[index]
+    if (tempQuestionAbove && tempQuestionBelow) {
+      exercise.value.questions[index - 1] = tempQuestionBelow
+      exercise.value.questions[index] = tempQuestionAbove
+    }
   }
 }
 
 const moveQuestionDown = (question: Question) => {
   const index = exercise.value.questions.findIndex((q) => q.id === question.id)
   if (index < exercise.value.questions.length - 1) {
-    const temp = exercise.value.questions[index + 1]
-    exercise.value.questions[index + 1] = exercise.value.questions[index]
-    exercise.value.questions[index] = temp
+    const tempQuestionAbove = exercise.value.questions[index + 1]
+    const tempQuestionBelow = exercise.value.questions[index]
+    if (tempQuestionAbove && tempQuestionBelow) {
+      exercise.value.questions[index + 1] = tempQuestionBelow
+      exercise.value.questions[index] = tempQuestionAbove
+    }
   }
 }
 </script>
@@ -50,6 +56,7 @@ const moveQuestionDown = (question: Question) => {
       :key="question.id"
     >
       <FormQuestionYesNo
+        v-if="exercise.questions[index]"
         v-model="exercise.questions[index]"
         @delete="deleteQuestion"
         @moveUp="moveQuestionUp"

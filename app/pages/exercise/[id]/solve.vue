@@ -6,7 +6,7 @@ definePageMeta({
 const route = useRoute()
 
 const { data: exercise } = useFetch<Exercise>(
-  `/api/exercise/${route.params.id}`
+  `/api/exercises/${route.params.id}`
 )
 
 const currentScreen = ref(-1)

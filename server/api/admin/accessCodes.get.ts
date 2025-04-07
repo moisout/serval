@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
 
   const drizzle = useDrizzle()
 
-  const accessCodes = await drizzle.query.accessCodes.findMany()
+  const accessCodes = await drizzle.query.accessCodesTable.findMany()
 
   return (
     accessCodes?.map((accessCode) => ({

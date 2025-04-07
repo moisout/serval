@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useDialog, NButton } from 'naive-ui'
 const { data, status, signOut } = useAuth()
 
 const dialog = useDialog()

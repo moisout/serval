@@ -1,14 +1,11 @@
-import autoImport from 'unplugin-auto-import/vite'
-import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
-import components from 'unplugin-vue-components/vite'
-
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
 
   app: {
     head: {
-      title: 'serval',
+      title: 'Serval',
+      htmlAttrs: { lang: 'de' },
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
     }
   },
@@ -60,23 +57,6 @@ export default defineNuxtConfig({
   },
 
   vite: {
-    plugins: [
-      autoImport({
-        imports: [
-          {
-            'naive-ui': [
-              'useDialog',
-              'useMessage',
-              'useNotification',
-              'useLoadingBar'
-            ]
-          }
-        ]
-      }),
-      components({
-        resolvers: [NaiveUiResolver()]
-      })
-    ],
     css: {
       preprocessorOptions: {
         scss: {

@@ -1,6 +1,6 @@
 <template>
   <div class="title-box">
-    <div class="title-box-bg" />
+    <!-- <div class="title-box-bg" /> -->
     <slot />
   </div>
 </template>
@@ -8,7 +8,6 @@
 <style lang="scss" scoped>
 .title-box {
   position: relative;
-  height: 75px;
 
   .title-box-bg {
     z-index: 1;

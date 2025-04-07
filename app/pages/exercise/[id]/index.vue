@@ -6,15 +6,19 @@ const route = useRoute()
 const router = useRouter()
 
 const { data: exercise } = useFetch<Exercise>(
-  `/api/exercise/${route.params.id}`
+  `/api/exercises/${route.params.id}`
 )
 
 const deleteExercise = async () => {
-  await fetch(`/api/exercise/${route.params.id}`, {
+  await fetch(`/api/exercises/${route.params.id}`, {
     method: 'DELETE'
   })
 
   router.push('/')
+}
+
+const editExercise = () => {
+  router.push(`/exercise/${route.params.id}/edit`)
 }
 </script>
 
@@ -34,6 +38,11 @@ const deleteExercise = async () => {
             icon="material-symbols:delete-rounded"
             @click="deleteExercise"
             :color="danger"
+          />
+          <IconButton
+            class="exercise-delete"
+            icon="material-symbols:edit-square-outline-rounded"
+            @click="editExercise"
           />
           <PrimaryButton
             :to="`/exercise/${route.params.id}/solve`"
@@ -91,7 +100,7 @@ const deleteExercise = async () => {
   .exercise-content {
     max-width: 900px;
     width: 100%;
-    margin: 45px auto 0 auto;
+    margin: 0 auto;
     padding: 0 20px;
   }
 }
