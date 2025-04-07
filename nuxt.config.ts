@@ -55,6 +55,10 @@ export default defineNuxtConfig({
     globalAppMiddleware: true
   },
 
+  build: {
+    transpile: ['naive-ui', 'vueuc']
+  },
+
   vite: {
     plugins: [
       autoImport({

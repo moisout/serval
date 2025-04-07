@@ -13,36 +13,41 @@
     "db:generate": "drizzle-kit generate"
   },
   "devDependencies": {
-    "@iconify-json/material-symbols": "1.2.12",
-    "@types/bcryptjs": "2.4.6",
+    "@iconify-json/material-symbols": "1.2.17",
+    "@types/bcryptjs": "3.0.0",
     "@types/uuid": "10.0.0",
-    "drizzle-kit": "0.30.1",
-    "prettier": "3.4.2",
+    "drizzle-kit": "0.30.6",
+    "prettier": "3.5.3",
     "prettier-plugin-organize-imports": "4.1.0",
-    "typescript": "5.7.2",
-    "wrangler": "3.99.0"
+    "typescript": "5.8.3",
+    "vueuc": "^0.4.64",
+    "wrangler": "4.7.2"
   },
   "dependencies": {
-    "@nuxt/fonts": "0.10.3",
-    "@nuxt/icon": "1.10.3",
-    "@nuxthub/core": "0.8.10",
-    "@sidebase/nuxt-auth": "0.10.0",
-    "bcryptjs": "2.4.3",
-    "drizzle-orm": "0.38.3",
-    "naive-ui": "^2.40.4",
-    "nuxt": "3.15.0",
+    "@nuxt/fonts": "0.11.1",
+    "@nuxt/icon": "1.11.0",
+    "@nuxthub/core": "0.8.23",
+    "@sidebase/nuxt-auth": "0.10.1",
+    "bcryptjs": "3.0.2",
+    "drizzle-orm": "0.41.0",
+    "naive-ui": "^2.41.0",
+    "nuxt": "3.16.2",
     "nuxtjs-naive-ui": "1.0.2",
-    "sass": "1.83.0",
+    "sass": "1.86.3",
     "unenv": "1.10.0",
-    "unplugin-auto-import": "0.19.0",
-    "unplugin-vue-components": "0.28.0",
-    "uuid": "11.0.3",
+    "unplugin-auto-import": "19.1.2",
+    "unplugin-vue-components": "28.4.1",
+    "uuid": "11.1.0",
     "vue": "3.5.13",
     "vue-router": "4.5.0"
   },
   "trustedDependencies": [
     "@parcel/watcher",
     "esbuild",
+    "sharp",
     "workerd"
-  ]
+  ],
+  "patchedDependencies": {
+    "@juggle/resize-observer@3.4.0": "patches/@juggle%2Fresize-observer@3.4.0.patch"
+  }
 }
