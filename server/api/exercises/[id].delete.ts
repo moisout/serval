@@ -1,4 +1,4 @@
-import { exercisesTable } from '~~/server/database/schema'
+import { exercisesTable, questionsTable } from '~~/server/database/schema'
 
 export default defineEventHandler(async (event) => {
   await requireTeacherSession(event)
@@ -10,6 +10,10 @@ export default defineEventHandler(async (event) => {
   }
 
   const drizzle = useDrizzle()
+
+  await drizzle
+    .delete(questionsTable)
+    .where(eq(questionsTable.exerciseId, exerciseId))
 
   await drizzle.delete(exercisesTable).where(eq(exercisesTable.id, exerciseId))
 
