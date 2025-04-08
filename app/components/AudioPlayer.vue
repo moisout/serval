@@ -18,6 +18,20 @@ onMounted(async () => {
   await requestAudio()
 })
 
+watch(
+  () => props.text,
+  async (newText) => {
+    if (newText) {
+      audio.value?.pause()
+      audio.value = undefined
+      audioState.playing = false
+      audioState.buffering = true
+      error.value = ''
+      await requestAudio()
+    }
+  }
+)
+
 const requestAudio = async () => {
   const audioResponse = await $fetch('/api/tts/synthesize', {
     method: 'POST',
