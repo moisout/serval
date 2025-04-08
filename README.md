@@ -8,3 +8,8 @@
 - Drücke den glatten Knopf für Nein.
 
 - Text, der gesagt wird
+
+
+Datenschutz und Sicherheit
+
+Leda 0.9

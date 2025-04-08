@@ -1,3 +1,15 @@
+<script setup lang="ts">
+useHead({
+  title: 'Übung',
+  meta: [
+    {
+      name: 'description',
+      content: 'Übung'
+    }
+  ]
+})
+</script>
+
 <template>
   <div class="layout-exercise">
     <slot />
@@ -16,6 +28,9 @@ body,
 .layout-exercise {
   margin: 0;
   padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 .layout-exercise {

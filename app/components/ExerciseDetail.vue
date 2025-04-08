@@ -25,9 +25,13 @@ const mapAnswer = (answer: string) => {
     >
       <div class="question">
         <p class="question-text">{{ index + 1 }}. {{ question.question }}</p>
+        <p class="additional-text" v-if="question.additionalText">
+          {{ question.additionalText }}
+        </p>
         <p class="answer-text">
           Korrekte Antwort: {{ mapAnswer(question.correctAnswer) }}
         </p>
+        <AudioPlayer :text="getSpokenText(question)" />
       </div>
     </div>
   </div>
@@ -58,10 +62,13 @@ const mapAnswer = (answer: string) => {
       background-color: globals.$gray-200;
       padding: 10px 15px;
       border-radius: 10px;
+      align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
 
       .question-text {
         font-size: 1.1rem;
-        margin-bottom: 5px;
       }
       .answer-text {
         font-size: 1rem;

@@ -11,6 +11,7 @@ const addQuestion = () => {
     id: v4(),
     type: 'yes-no',
     question: 'Neue Frage',
+    additionalText: '',
     correctAnswer: 'yes'
   })
 }

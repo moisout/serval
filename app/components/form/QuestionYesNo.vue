@@ -36,8 +36,6 @@ const additionalText = computed({
   }
 })
 
-globalVariables
-
 const deleteQuestion = () => {
   emit('delete', props.modelValue)
 }
@@ -77,7 +75,7 @@ const moveQuestionDown = () => {
     <div class="question-content">
       <n-input
         type="textarea"
-        v-model="additionalText"
+        v-model:value="additionalText"
         class="form-question-yes-no-label"
       />
       <p class="form-question-yes-no-label">Korrekte Antwort</p>

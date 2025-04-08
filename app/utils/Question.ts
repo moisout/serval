@@ -4,6 +4,6 @@ interface QuestionYesNo {
   id: string
   type: 'yes-no'
   question: string
-  additionalText?: string
+  additionalText: string
   correctAnswer: 'yes' | 'no'
 }

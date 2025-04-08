@@ -55,7 +55,9 @@ export default defineEventHandler(async (event) => {
 
   // Delete questions that are no longer in the exercise
   for (const question of questionsToDelete) {
-    await drizzle.delete(questionsTable).where(eq(questionsTable.id, question.id))
+    await drizzle
+      .delete(questionsTable)
+      .where(eq(questionsTable.id, question.id))
   }
   // Insert new questions
   for (const question of questionsToInsert) {
@@ -65,7 +67,8 @@ export default defineEventHandler(async (event) => {
       exerciseId: exerciseId,
       question: question.question,
       correctAnswer: question.correctAnswer,
-      createdAt: question.createdAt
+      createdAt: question.createdAt,
+      additionalText: question.additionalText
     })
   }
   // Update existing questions
@@ -75,7 +78,8 @@ export default defineEventHandler(async (event) => {
       .set({
         // order: question.order,
         question: question.question,
-        correctAnswer: question.correctAnswer
+        correctAnswer: question.correctAnswer,
+        additionalText: question.additionalText
       })
       .where(eq(questionsTable.id, question.id))
   }

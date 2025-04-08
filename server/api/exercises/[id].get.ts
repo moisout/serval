@@ -1,4 +1,8 @@
-import { exercisesTable, questionsTable } from '~~/server/database/schema'
+import {
+  exercisesTable,
+  questionsTable,
+  usersTable
+} from '~~/server/database/schema'
 
 export default defineEventHandler(async (event) => {
   await requireUserSession(event)
@@ -19,6 +23,14 @@ export default defineEventHandler(async (event) => {
     where: eq(questionsTable.exerciseId, exerciseId)
   })
 
+  let exerciseAuthor = 'unknown'
+  if (exercise?.authorId) {
+    const exerciseUser = await drizzle.query.usersTable.findFirst({
+      where: eq(usersTable.id, exercise?.authorId)
+    })
+    exerciseAuthor = exerciseUser?.username ?? 'unknown'
+  }
+
   if (!exercise) {
     setResponseStatus(event, 404)
 
@@ -27,5 +39,9 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  return { ...exercise, questions: exerciseQuestions ?? [] }
+  return {
+    ...exercise,
+    questions: exerciseQuestions ?? [],
+    author: exerciseAuthor
+  }
 })
