@@ -49,6 +49,10 @@ export default defineNuxtConfig({
     transpile: ['naive-ui', 'vueuc']
   },
 
+  alias: {
+    string_decoder: 'string_decoder/'
+  },
+
   vite: {
     css: {
       preprocessorOptions: {

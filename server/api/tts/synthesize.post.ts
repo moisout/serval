@@ -27,7 +27,8 @@ export default defineEventHandler(async (event) => {
   }
 
   const client = new textToSpeech.TextToSpeechClient({
-    apiKey: process.env.GOOGLE_API_KEY
+    apiKey: process.env.GOOGLE_API_KEY,
+    projectId: process.env.GOOGLE_PROJECT_ID
   })
 
   const [audio] = await client.synthesizeSpeech({
