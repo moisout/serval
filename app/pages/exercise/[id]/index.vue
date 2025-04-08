@@ -74,7 +74,9 @@ const editExercise = () => {
       <template #title>{{ exercise?.name }}</template>
       <template #header>
         <n-breadcrumb>
-          <n-breadcrumb-item href="/"> Aufgabenbücher </n-breadcrumb-item>
+          <n-breadcrumb-item @click="$router.push('/')">
+            Aufgabenbücher
+          </n-breadcrumb-item>
           <n-breadcrumb-item>{{ exercise?.name }}</n-breadcrumb-item>
         </n-breadcrumb>
       </template>

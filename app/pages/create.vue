@@ -56,7 +56,7 @@ const warnLeave = () => {
     <template #title>Aufgabenbuch erstellen</template>
     <template #header>
       <n-breadcrumb>
-        <n-breadcrumb-item href="/" @click.stop.prevent="warnLeave">
+        <n-breadcrumb-item @click.stop.prevent="warnLeave">
           Aufgabenbücher
         </n-breadcrumb-item>
         <n-breadcrumb-item>{{ exercise.name }}</n-breadcrumb-item>
