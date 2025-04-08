@@ -2,14 +2,6 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
 
-  app: {
-    head: {
-      title: 'Serval',
-      htmlAttrs: { lang: 'de' },
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
-    }
-  },
-
   future: {
     compatibilityVersion: 4
   },

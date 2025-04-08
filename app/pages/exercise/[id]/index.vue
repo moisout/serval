@@ -1,20 +1,52 @@
 <script setup lang="ts">
+import {
+  NButton,
+  NPageHeader,
+  NSpace,
+  NGrid,
+  NStatistic,
+  NGi,
+  NBreadcrumb,
+  NBreadcrumbItem,
+  useDialog
+} from 'naive-ui'
 import globalVariables from '~/assets/styles/variables.module.scss'
 const { danger } = globalVariables
 
 const route = useRoute()
 const router = useRouter()
 
+const headers = useRequestHeaders(['cookie'])
 const { data: exercise } = useFetch<Exercise>(
-  `/api/exercises/${route.params.id}`
+  `/api/exercises/${route.params.id}`,
+  {
+    headers,
+    credentials: 'include'
+  }
 )
 
-const deleteExercise = async () => {
-  await fetch(`/api/exercises/${route.params.id}`, {
-    method: 'DELETE'
-  })
+const dialog = useDialog()
 
-  router.push('/')
+const deleteExercise = async () => {
+  dialog.warning({
+    title: 'Aufgabenbuch löschen',
+    content: `Möchtest du das Aufgabenbuch "${exercise.value?.name}" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.`,
+    positiveText: 'Abbrechen',
+    negativeText: 'Löschen',
+    onNegativeClick: async () => {
+      await fetch(`/api/exercises/${route.params.id}`, {
+        method: 'DELETE'
+      })
+
+      router.push('/')
+    },
+    negativeButtonProps: {
+      size: 'large'
+    },
+    positiveButtonProps: {
+      size: 'large'
+    }
+  })
 }
 
 const editExercise = () => {
@@ -24,33 +56,51 @@ const editExercise = () => {
 
 <template>
   <div class="exercise" v-if="exercise">
-    <TitleBox>
-      <div class="exercise-title-section">
-        <div class="exercise-info">
-          <p class="exercise-title">{{ exercise?.name }}</p>
-
-          <p class="exercise-topic">{{ exercise?.topic }}</p>
-          <p class="exercise-author">Erstellt von {{ exercise?.author }}</p>
-        </div>
-        <div class="exercise-actions">
-          <IconButton
-            class="exercise-delete"
-            icon="material-symbols:delete-rounded"
-            @click="deleteExercise"
-            :color="danger"
+    <n-page-header @back="() => router.push('/')">
+      <n-grid :cols="5">
+        <n-gi>
+          <n-statistic label="Thema" :value="exercise.topic" />
+        </n-gi>
+        <n-gi>
+          <n-statistic label="Erstellt von" :value="exercise.author" />
+        </n-gi>
+        <n-gi>
+          <n-statistic
+            label="Anzahl Fragen"
+            :value="exercise.questions?.length"
           />
-          <IconButton
-            class="exercise-delete"
-            icon="material-symbols:edit-square-outline-rounded"
-            @click="editExercise"
-          />
-          <PrimaryButton
-            :to="`/exercise/${route.params.id}/solve`"
-            text="Aufgabenbuch Beginnen"
-          />
-        </div>
-      </div>
-    </TitleBox>
+        </n-gi>
+      </n-grid>
+      <template #title>{{ exercise?.name }}</template>
+      <template #header>
+        <n-breadcrumb>
+          <n-breadcrumb-item href="/"> Aufgabenbücher </n-breadcrumb-item>
+          <n-breadcrumb-item>{{ exercise?.name }}</n-breadcrumb-item>
+        </n-breadcrumb>
+      </template>
+      <template #extra>
+        <n-space>
+          <n-button type="error" @click="deleteExercise">
+            <template #icon>
+              <Icon name="material-symbols:delete-rounded" />
+            </template>
+          </n-button>
+          <n-button @click="editExercise">
+            <template #icon>
+              <Icon name="material-symbols:edit-square-outline-rounded" />
+            </template>
+          </n-button>
+          <nuxt-link :to="`/exercise/${route.params.id}/solve`">
+            <n-button type="primary">
+              <template v-slot:icon>
+                <Icon name="material-symbols:play-arrow-outline-rounded"
+              /></template>
+              Aufgabenbuch Beginnen
+            </n-button>
+          </nuxt-link>
+        </n-space>
+      </template>
+    </n-page-header>
     <div class="exercise-content">
       <ExerciseDetail :exercise="exercise" />
     </div>
@@ -63,7 +113,6 @@ const editExercise = () => {
 <style lang="scss" scoped>
 .exercise {
   .exercise-title-section {
-    padding: 20px;
     display: flex;
     justify-content: space-between;
     z-index: 10;
@@ -101,7 +150,7 @@ const editExercise = () => {
     max-width: 900px;
     width: 100%;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 20px 0;
   }
 }
 </style>

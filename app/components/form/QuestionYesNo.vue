@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import globalVariables from '~/assets/styles/variables.module.scss'
+import { NInput } from 'naive-ui'
 const { danger } = globalVariables
 
 const props = defineProps<{ modelValue: Question }>()
@@ -25,6 +26,13 @@ const correctAnswer = computed({
   get: () => props.modelValue?.correctAnswer,
   set: (value) => {
     emit('update:modelValue', { ...props.modelValue, correctAnswer: value })
+  }
+})
+
+const additionalText = computed({
+  get: () => props.modelValue?.additionalText,
+  set: (value) => {
+    emit('update:modelValue', { ...props.modelValue, additionalText: value })
   }
 })
 
@@ -67,6 +75,11 @@ const moveQuestionDown = () => {
       </div>
     </div>
     <div class="question-content">
+      <n-input
+        type="textarea"
+        v-model="additionalText"
+        class="form-question-yes-no-label"
+      />
       <p class="form-question-yes-no-label">Korrekte Antwort</p>
       <div class="form-question-yes-no-radio">
         <input

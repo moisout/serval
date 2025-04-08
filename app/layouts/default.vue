@@ -1,14 +1,24 @@
 <script setup lang="ts">
-import { NConfigProvider, NDialogProvider, NMessageProvider } from 'naive-ui'
+import {
+  NConfigProvider,
+  NDialogProvider,
+  NMessageProvider,
+  NLoadingBarProvider
+} from 'naive-ui'
+
+useHead({
+  titleTemplate: (titleChunk) =>
+    titleChunk ? `${titleChunk} :: Serval` : 'Serval',
+  htmlAttrs: { lang: 'de' },
+  link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+})
 </script>
 
 <template>
   <n-config-provider :theme-overrides="themeOverrides">
     <n-dialog-provider>
       <n-message-provider>
-        <!-- <n-loading-bar-provider>
-          <LoadingBar />
-        </n-loading-bar-provider> -->
+        <NuxtLoadingIndicator />
         <MainHeader />
         <div class="layout-default">
           <slot />

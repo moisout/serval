@@ -1,17 +1,27 @@
 <script setup lang="ts">
+import { NPageHeader, NSpace, NButton } from 'naive-ui'
+
 const headers = useRequestHeaders(['cookie'])
 const { data: users } = useFetch('/api/admin/users', {
   headers,
   credentials: 'include'
 })
+
+useHead({
+  title: 'Nutzer',
+  meta: [
+    {
+      name: 'description',
+      content: 'Nutzerverwaltung'
+    }
+  ]
+})
 </script>
 
 <template>
-  <TitleBox>
-    <div class="users-title-section">
-      <p class="users-title">Nutzer</p>
-    </div>
-  </TitleBox>
+  <n-page-header>
+    <template #title>Nutzer</template>
+  </n-page-header>
   <div class="users-list" v-if="users">
     <div class="users-list-inner">
       <div class="users-list-header">
@@ -24,28 +34,12 @@ const { data: users } = useFetch('/api/admin/users', {
 </template>
 
 <style lang="scss" scoped>
-.users-title-section {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  z-index: 10;
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-
-  .users-title {
-    font-size: 1.8rem;
-  }
-}
-
 .users-list {
-  padding: 20px;
   z-index: 10;
   position: relative;
   width: 100%;
   max-width: 900px;
-  margin: 0 auto;
+  margin: 20px auto 0 auto;
 
   .users-list-inner {
     width: 100%;

@@ -76,7 +76,11 @@ const warnLeave = () => {
     </template>
     <template #extra>
       <n-space>
-        <n-button type="primary" @click="saveExercise">Speichern</n-button>
+        <n-button type="primary" @click="saveExercise"
+          ><template #icon
+            ><Icon name="material-symbols:save-outline-rounded" /></template
+          >Speichern</n-button
+        >
       </n-space>
     </template>
   </n-page-header>
@@ -88,26 +92,11 @@ const warnLeave = () => {
 </template>
 
 <style lang="scss" scoped>
-.create-title-section {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  z-index: 10;
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-
-  .create-title {
-    font-size: 1.8rem;
-  }
-}
-
 .create-outer {
   max-width: 900px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 20px 0;
 
   .create {
     border: solid 1px globals.$gray-300;

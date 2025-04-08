@@ -53,10 +53,6 @@ export default defineEventHandler(async (event) => {
     existingQuestions.some((q) => q.id === question.id)
   )
 
-  console.log('questionsToDelete', questionsToDelete)
-  console.log('questionsToInsert', questionsToInsert)
-  console.log('questionsToUpdate', questionsToUpdate)
-
   // Delete questions that are no longer in the exercise
   for (const question of questionsToDelete) {
     await drizzle.delete(questionsTable).where(eq(questionsTable.id, question.id))

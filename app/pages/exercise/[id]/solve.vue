@@ -5,8 +5,13 @@ definePageMeta({
 
 const route = useRoute()
 
+const headers = useRequestHeaders(['cookie'])
 const { data: exercise } = useFetch<Exercise>(
-  `/api/exercises/${route.params.id}`
+  `/api/exercises/${route.params.id}`,
+  {
+    headers,
+    credentials: 'include'
+  }
 )
 
 const currentScreen = ref(-1)

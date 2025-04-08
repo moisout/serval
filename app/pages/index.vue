@@ -1,15 +1,20 @@
 <script setup lang="ts">
-import { NPageHeader, NSpace, NButton } from 'naive-ui';
+import { NPageHeader, NSpace, NButton } from 'naive-ui'
 const { data: exercises } = useFetch('/api/exercises')
 </script>
 
 <template>
   <n-page-header>
-    <template #title> Aufgabenbücher </template>
+    <template #title>Aufgabenbücher</template>
     <template #extra>
       <n-space>
         <NuxtLink to="/create">
-          <n-button><template v-slot:icon><Icon name="material-symbols:add-notes-outline-rounded" /></template>Aufgabenbuch erstellen</n-button>
+          <n-button>
+            <template v-slot:icon>
+              <Icon name="material-symbols:add-notes-outline-rounded"
+            /></template>
+            Aufgabenbuch erstellen
+          </n-button>
         </NuxtLink>
       </n-space>
     </template>
@@ -30,7 +35,7 @@ const { data: exercises } = useFetch('/api/exercises')
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 20px 0;
 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

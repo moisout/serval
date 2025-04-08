@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { NButton } from 'naive-ui'
 import { v4 } from 'uuid'
 
 const props = defineProps<{ exercise: Exercise }>()
@@ -63,12 +64,7 @@ const moveQuestionDown = (question: Question) => {
         @moveDown="moveQuestionDown"
       />
     </div>
-    <PrimaryButton
-      class="add-question-btn"
-      text="Frage hinzufügen"
-      type="button"
-      @click="addQuestion"
-    />
+    <n-button @click="addQuestion">Frage hinzufügen</n-button>
   </div>
 </template>
 

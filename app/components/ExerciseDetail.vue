@@ -2,6 +2,17 @@
 defineProps<{
   exercise: Exercise
 }>()
+
+const mapAnswer = (answer: string) => {
+  switch (answer) {
+    case 'yes':
+      return 'Ja'
+    case 'no':
+      return 'Nein'
+    default:
+      return answer
+  }
+}
 </script>
 
 <template>
@@ -12,7 +23,12 @@ defineProps<{
       v-for="(question, index) in exercise.questions"
       :key="question.id"
     >
-      <p class="question">{{ index + 1 }}. {{ question.question }}</p>
+      <div class="question">
+        <p class="question-text">{{ index + 1 }}. {{ question.question }}</p>
+        <p class="answer-text">
+          Korrekte Antwort: {{ mapAnswer(question.correctAnswer) }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -42,6 +58,15 @@ defineProps<{
       background-color: globals.$gray-200;
       padding: 10px 15px;
       border-radius: 10px;
+
+      .question-text {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+      }
+      .answer-text {
+        font-size: 1rem;
+        color: globals.$gray-600;
+      }
     }
   }
 }

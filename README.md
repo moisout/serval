@@ -7,4 +7,4 @@
 - Drücke den rauen Knopf für Ja.
 - Drücke den glatten Knopf für Nein.
 
-- Text, der gesagt wirdaya
+- Text, der gesagt wird
