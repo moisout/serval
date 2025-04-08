@@ -1,6 +1,6 @@
 <template>
   <div class="start-screen">
-    <p class="start-text">Drücke den kleinen Knopf, um die Aufgabe zu starten</p>
+    <p class="start-text">{{ defaultTexts.startScreen }}</p>
     <Icon
       name="material-symbols:radio-button-checked-outline"
       size="100"

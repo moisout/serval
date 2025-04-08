@@ -21,8 +21,10 @@ const currentScreen = ref(-1)
 const yellowButton = () => {
   if (currentScreen.value === -1) {
     currentScreen.value = 0
+    playScreenAudio()
   } else if (currentScreen.value < questionsCount.value) {
     currentScreen.value++
+    playScreenAudio()
   } else {
     router.push(`/exercise/${route.params.id}`)
   }
@@ -42,8 +44,61 @@ const onButtonPress = (event: KeyboardEvent) => {
   }
 }
 
+const audioElement = ref<HTMLAudioElement | null>(null)
+
+const playScreenAudio = async () => {
+  let textToPlay = ''
+  if (currentScreen.value === -1) {
+    textToPlay = defaultTexts.startScreen
+  } else if (currentScreen.value < questionsCount.value) {
+    textToPlay = getSpokenText(exercise.value?.questions[currentScreen.value])
+  } else {
+    textToPlay = defaultTexts.endScreen
+  }
+
+  const audioResponse = await $fetch('/api/tts/synthesize', {
+    method: 'POST',
+    body: {
+      text: textToPlay,
+      lang: 'de-DE'
+    }
+  })
+  const audioError = (audioResponse as any)?.error
+  if (!audioResponse || audioError) {
+    console.log(audioError || 'Audio not found')
+    return
+  }
+  const audioBlob = new Blob([audioResponse as unknown as string], {
+    type: 'audio/mpeg'
+  })
+  const audioUrl = URL.createObjectURL(audioBlob)
+  if (audioElement.value) {
+    audioElement.value.pause()
+    audioElement.value?.removeEventListener('canplay', playAudio)
+    audioElement.value = null
+  }
+  audioElement.value = new Audio(audioUrl)
+  audioElement.value.addEventListener('canplay', playAudio)
+}
+
+const playAudio = () => {
+  if (audioElement.value) {
+    audioElement.value.play()
+  }
+}
+
 onMounted(() => {
   window.addEventListener('keyup', onButtonPress)
+
+  playScreenAudio()
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keyup', onButtonPress)
+  if (audioElement.value) {
+    audioElement.value.pause()
+    audioElement.value = null
+  }
 })
 </script>
 
