@@ -1,4 +1,3 @@
-import textToSpeech from '@google-cloud/text-to-speech'
 import { hashString } from '~~/server/utils/hashString'
 
 export default defineEventHandler(async (event) => {
@@ -19,39 +18,30 @@ export default defineEventHandler(async (event) => {
     return hubBlob().serve(event, fileName)
   }
 
-  if (!process.env.GOOGLE_PROJECT_ID || !process.env.GOOGLE_API_KEY) {
+  if (!process.env.TTS_RELAY_SECRET_KEY) {
     setResponseStatus(event, 500)
     return {
-      error: 'Google project ID or access token is not set'
+      error: 'TTS relay secret key is not set'
     }
   }
 
-  const client = new textToSpeech.TextToSpeechClient({
-    apiKey: process.env.GOOGLE_API_KEY,
-    projectId: process.env.GOOGLE_PROJECT_ID
-  })
-
-  const [audio] = await client.synthesizeSpeech({
-    input: {
-      text: cleanedText
-    },
-    voice: {
-      languageCode: query.lang?.toString() || 'de-DE',
-      name: 'de-DE-Chirp3-HD-Leda'
-    },
-    audioConfig: {
-      audioEncoding: 'MP3'
+  const audioResponse = await $fetch('http://tts-relay.m0.is/api/tts', {
+    method: 'POST',
+    body: {
+      text: cleanedText,
+      lang: query.lang?.toString() || 'de-DE',
+      secretKey: process.env.TTS_RELAY_SECRET_KEY
     }
   })
 
-  if (!audio?.audioContent) {
+  if (!audioResponse) {
     setResponseStatus(event, 500)
     return {
       error: 'Audio content is empty'
     }
   }
 
-  const audioBlob = new Blob([audio.audioContent])
+  const audioBlob = new Blob([audioResponse as any])
 
   const uploadedAudio = await hubBlob().put(fileName, audioBlob, {
     customMetadata: {
