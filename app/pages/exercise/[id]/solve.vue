@@ -71,17 +71,14 @@ const greenButton = async () => {
 const storeAnswer = async (answer: string) => {
   const currentQuestion = exercise.value?.questions[currentScreen.value]
   if (currentQuestion) {
-    await $fetch(
-      `/api/exercises/${exercise.value?.id}/answers`,
-      {
-        method: 'POST',
-        body: {
-          answer,
-          questionId: currentQuestion.id,
-        },
-        credentials: 'include'
-      }
-    )
+    await $fetch(`/api/exercises/${exercise.value?.id}/answers`, {
+      method: 'POST',
+      body: {
+        answer,
+        questionId: currentQuestion.id
+      },
+      credentials: 'include'
+    })
   }
 }
 
@@ -142,6 +139,7 @@ const playScreenAudio = async () => {
   }
   return new Promise((resolve) => {
     audioElement.value = new Audio(audioUrl)
+    audioElement.value.playbackRate = defaultValues.playbackRate
 
     const ended = () => {
       currentlySpeaking.value = false
@@ -195,6 +193,17 @@ onBeforeUnmount(() => {
       </nuxt-link>
     </div>
     <div
+      class="repeat-info"
+      v-if="currentScreen > -1 && currentScreen < questionsCount"
+    >
+      <Icon
+        name="material-symbols:radio-button-checked-outline"
+        size="50"
+        class="push-button"
+      />
+      <p>Gesprochenes wiederholen</p>
+    </div>
+    <div
       class="exercise-progress"
       v-if="currentScreen > -1 && currentScreen < questionsCount"
     >
@@ -237,6 +246,27 @@ onBeforeUnmount(() => {
     z-index: 9999;
     top: 0;
     left: 0;
+    margin: 10px;
+  }
+
+  .repeat-info {
+    position: fixed;
+    z-index: 9999;
+    bottom: 0;
+    left: 0;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .push-button {
+      color: #eaea00;
+    }
+
+    p {
+      font-size: 2rem;
+      color: globals.$gray-900;
+    }
   }
 
   .exercise-progress {

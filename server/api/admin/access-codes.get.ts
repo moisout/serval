@@ -11,7 +11,8 @@ export default defineEventHandler(async (event) => {
     accessCodes?.map((accessCode) => ({
       id: accessCode.id,
       code: accessCode.code,
-      role: accessCode.role
+      role: accessCode.role,
+      createdAt: accessCode.createdAt
     })) || []
   )
 })

@@ -56,6 +56,7 @@ const requestAudio = async () => {
 
   const audioElement = new Audio(audioUrl)
   audio.value = audioElement
+  audio.value.playbackRate = defaultValues.playbackRate
 
   registerEventListeners(audioElement)
 }

@@ -27,7 +27,9 @@ export default defineEventHandler(async (event) => {
     correctAnswer: question.correctAnswer
   }))
 
-  await drizzle.insert(questionsTable).values(questionsToInsert)
+  if (questionsToInsert?.length) {
+    await drizzle.insert(questionsTable).values(questionsToInsert)
+  }
 
   return body
 })

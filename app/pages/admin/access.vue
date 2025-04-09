@@ -1,53 +1,112 @@
 <script setup lang="ts">
+import {
+  NPageHeader,
+  NBreadcrumb,
+  NBreadcrumbItem,
+  NFlex,
+  NSpace,
+  NButton,
+  NSelect
+} from 'naive-ui'
 const headers = useRequestHeaders(['cookie'])
-const { data: users } = useFetch('/api/admin/access-codes', {
+const { data: accessCodes, refresh } = useFetch('/api/admin/access-codes', {
   headers,
   credentials: 'include'
 })
+
+useHead({
+  title: 'Zugangsschlüssel',
+  meta: [
+    {
+      name: 'description',
+      content: 'Zugangsschlüsselverwaltung'
+    }
+  ]
+})
+
+const createAccessCode = async () => {
+  await $fetch('/api/admin/access-codes', {
+    method: 'POST',
+    body: {
+      role: selectedRole.value
+    },
+    credentials: 'include'
+  })
+  await refresh()
+}
+
+const selectedRole = ref('student')
+const roles = [
+  {
+    label: 'Schüler*in',
+    value: 'student'
+  },
+  {
+    label: 'Lehrperson',
+    value: 'teacher'
+  }
+]
 </script>
 
 <template>
-  <TitleBox>
-    <div class="users-title-section">
-      <p class="users-title">Nutzer</p>
-    </div>
-  </TitleBox>
-  <div class="users-list" v-if="users">
-    <div class="users-list-inner">
-      <div class="users-list-header">
-        <p>Benutzername</p>
+  <n-page-header>
+    <template #title>Zugangschlüssel</template>
+    <template #header>
+      <n-breadcrumb>
+        <n-breadcrumb-item @click="$router.push('/')">
+          Admin
+        </n-breadcrumb-item>
+        <n-breadcrumb-item>Zugangschlüssel</n-breadcrumb-item>
+      </n-breadcrumb>
+    </template>
+    <template #extra>
+      <n-flex>
+        <n-select
+          v-model:value="selectedRole"
+          :options="roles"
+          placeholder="Rolle auswählen"
+          style="width: 200px"
+        />
+        <n-button @click="createAccessCode">
+          <template #icon>
+            <Icon name="material-symbols:add-2-rounded" />
+          </template>
+          Zugangschlüssel erstellen</n-button
+        >
+      </n-flex>
+    </template>
+  </n-page-header>
+  <div class="access-code-list" v-if="accessCodes?.length">
+    <div class="access-code-list-inner">
+      <div class="access-code-list-header">
+        <p>Zugangsschlüssel</p>
         <p>Rolle</p>
       </div>
-      <ListUser v-for="user in users" :user="user" :key="user.id" />
+      <ListAccessCode
+        v-for="accessCode in accessCodes"
+        :accessCode="accessCode"
+        :key="accessCode.id"
+        @refresh="refresh"
+      />
     </div>
+  </div>
+  <div v-else>
+    <n-space class="access-code-list" align="center">
+      <p>Keine Zugangsschlüssel gefunden</p>
+    </n-space>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.users-title-section {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
+.access-code-list {
+  padding: 20px 0;
   z-index: 10;
   position: relative;
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
 
-  .users-title {
-    font-size: 1.8rem;
-  }
-}
-
-.users-list {
-  padding: 20px;
-  z-index: 10;
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-
-  .users-list-inner {
+  .access-code-list-inner {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -55,7 +114,7 @@ const { data: users } = useFetch('/api/admin/access-codes', {
     box-shadow: 0 1px 4px 0 #{globals.$primary}3a;
     background-color: globals.$bg-primary;
 
-    .users-list-header {
+    .access-code-list-header {
       display: flex;
       padding: 10px 20px;
       color: globals.$text-primary;

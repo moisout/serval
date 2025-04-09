@@ -20,12 +20,12 @@
     "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "5.8.3",
     "vueuc": "^0.4.64",
-    "wrangler": "4.8.0"
+    "wrangler": "4.9.1"
   },
   "dependencies": {
     "@nuxt/fonts": "0.11.1",
     "@nuxt/icon": "1.11.0",
-    "@nuxthub/core": "0.8.23",
+    "@nuxthub/core": "0.8.24",
     "@sidebase/nuxt-auth": "0.10.1",
     "bcryptjs": "3.0.2",
     "drizzle-orm": "0.41.0",
