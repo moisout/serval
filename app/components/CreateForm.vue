@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NButton } from 'naive-ui'
+import { NButton, NInput } from 'naive-ui'
 import { v4 } from 'uuid'
 
 const props = defineProps<{ exercise: Exercise }>()
@@ -49,8 +49,19 @@ const moveQuestionDown = (question: Question) => {
 
 <template>
   <div class="create-form">
-    <FormEditable v-model="exercise.name" title />
-    <FormEditable v-model="exercise.topic" label="Thema" />
+    <n-input
+      v-model:value="exercise.name"
+      size="large"
+      placeholder="Titel des Aufgabenbuchs"
+    >
+      <template #prefix><p class="label">Titel:</p></template>
+    </n-input>
+    <n-input
+      v-model:value="exercise.topic"
+      placeholder="Thema des Aufgabenbuchs"
+      >
+      <template #prefix><p class="label">Thema:</p></template>
+    </n-input>
 
     <div
       class="form-question"
@@ -74,5 +85,10 @@ const moveQuestionDown = (question: Question) => {
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  .label {
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
 }
 </style>

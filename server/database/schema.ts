@@ -28,7 +28,10 @@ export const exercisesTable = sqliteTable('exercises', {
   name: text('name').notNull(),
   authorId: text('author_id')
     .notNull()
-    .references(() => usersTable.id),
+    .references(() => usersTable.id, {
+      onDelete: 'set null',
+      onUpdate: 'cascade'
+    }),
   topic: text('topic').notNull(),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
@@ -40,7 +43,10 @@ export const questionsTable = sqliteTable('questions', {
   // order: integer('order').notNull(),
   exerciseId: text('exercise_id')
     .notNull()
-    .references(() => exercisesTable.id),
+    .references(() => exercisesTable.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    }),
   question: text('question').notNull(),
   additionalText: text('additional_text'),
   correctAnswer: text('correct_answer').notNull(),
@@ -54,13 +60,22 @@ export const resultsTable = sqliteTable('results', {
   answer: text('answer').notNull(),
   exerciseId: text('exercise_id')
     .notNull()
-    .references(() => exercisesTable.id),
+    .references(() => exercisesTable.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    }),
   userId: text('user_id')
     .notNull()
-    .references(() => usersTable.id),
+    .references(() => usersTable.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    }),
   questionId: text('question_id')
     .notNull()
-    .references(() => questionsTable.id),
+    .references(() => questionsTable.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    }),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
     .default(sql`(unixepoch())`)

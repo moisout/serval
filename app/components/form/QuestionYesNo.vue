@@ -52,7 +52,12 @@ const moveQuestionDown = () => {
 <template>
   <div class="form-question-yes-no">
     <div class="question-header">
-      <FormEditable class="question" v-model="questionTitle" />
+      <n-input
+        class="question"
+        v-model:value="questionTitle"
+        size="large"
+        placeholder="Frage"
+      />
       <div class="question-actions">
         <IconButton
           class="question-action"
@@ -76,7 +81,7 @@ const moveQuestionDown = () => {
       <n-input
         type="textarea"
         v-model:value="additionalText"
-        class="form-question-yes-no-label"
+        placeholder="Hilfetext"
       />
       <p class="form-question-yes-no-label">Korrekte Antwort</p>
       <div class="form-question-yes-no-radio">
@@ -99,11 +104,14 @@ const moveQuestionDown = () => {
             v-if="correctAnswer === 'yes'"
           />
           <Icon
-            name="material-symbols:cancel-rounded"
+            name="material-symbols:circle-outline"
             class="question-radio-icon"
             v-if="correctAnswer === 'no'"
           />
-          Ja
+          <Icon
+            class="question-radio-icon red"
+            name="material-symbols:radio-button-checked-outline"
+          />Grüner Knopf
         </label>
         <input
           type="radio"
@@ -124,11 +132,14 @@ const moveQuestionDown = () => {
             v-if="correctAnswer === 'no'"
           />
           <Icon
-            name="material-symbols:cancel-rounded"
+            name="material-symbols:circle-outline"
             class="question-radio-icon"
             v-if="correctAnswer === 'yes'"
           />
-          Nein
+          <Icon
+            class="question-radio-icon green"
+            name="material-symbols:radio-button-checked-outline"
+          />Roter Knopf
         </label>
       </div>
     </div>
@@ -176,6 +187,7 @@ const moveQuestionDown = () => {
 
     .form-question-yes-no-radio {
       display: flex;
+      flex-direction: column;
       gap: 10px;
 
       .question-radio {
@@ -184,23 +196,24 @@ const moveQuestionDown = () => {
 
       .question-radio-label {
         display: inline-flex;
-        padding: 8px 15px;
-        border: 1px solid globals.$gray-300;
+        padding: 8px;
         border-radius: 5px;
         cursor: pointer;
         text-align: center;
         gap: 4px;
 
-        border-color: globals.$danger;
-        color: globals.$danger;
+        color: globals.$gray-700;
 
         .question-radio-icon {
           margin: auto 0;
-        }
 
-        &.correct {
-          border-color: globals.$success;
-          color: globals.$success;
+          &.red {
+            color: red;
+          }
+
+          &.green {
+            color: green;
+          }
         }
       }
     }

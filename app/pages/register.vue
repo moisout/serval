@@ -1,39 +1,29 @@
 <script setup lang="ts">
+import { NPageHeader } from 'naive-ui'
 definePageMeta({ auth: false })
 </script>
 
 <template>
-  <TitleBox>
-    <div class="register-title-section">
-      <p class="register-title">Registrierung</p>
-    </div>
-  </TitleBox>
+  <n-page-header class="register-page-header">
+    <template #title>Register</template>
+  </n-page-header>
   <div class="register">
     <RegisterForm />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.register-title-section {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  z-index: 10;
-  position: relative;
-  width: 100%;
+.register-page-header {
   max-width: 500px;
+  width: 100%;
   margin: 0 auto;
-
-  .register-title {
-    font-size: 1.8rem;
-  }
 }
 
 .register {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 20px 0;
   z-index: 10;
   position: relative;
 }

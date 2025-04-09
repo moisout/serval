@@ -76,21 +76,6 @@ const warnLeave = () => {
 </template>
 
 <style lang="scss" scoped>
-.create-title-section {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  z-index: 10;
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-
-  .create-title {
-    font-size: 1.8rem;
-  }
-}
-
 .create-outer {
   max-width: 900px;
   width: 100%;

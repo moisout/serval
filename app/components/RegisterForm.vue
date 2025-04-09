@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { NInput, NButton } from 'naive-ui'
 const username = ref('')
 const password = ref('')
 const accessCode = ref('')
@@ -26,10 +27,28 @@ const error = ref('')
 <template>
   <form @submit.prevent="register" class="register-form">
     <div class="error" v-if="error">{{ error }}</div>
-    <FormInput type="text" v-model="username" label="Benutzername" />
-    <FormInput type="password" v-model="password" label="Passwort" />
-    <FormInput type="text" v-model="accessCode" label="Zugangscode" />
-    <PrimaryButton type="submit" text="Registrieren" filled />
+    <n-input
+      type="text"
+      v-model:value="username"
+      placeholder="Benutzername"
+      size="large"
+    />
+    <n-input
+      type="password"
+      v-model:value="password"
+      placeholder="Passwort"
+      show-password-on="click"
+      size="large"
+    />
+    <n-input
+      type="text"
+      v-model:value="accessCode"
+      placeholder="Zugangscode"
+      size="large"
+    />
+    <n-button type="primary" attr-type="submit" size="large"
+      >Registrieren</n-button
+    >
     <NuxtLink to="/login" class="login-link"> Stadtdessen einloggen </NuxtLink>
   </form>
 </template>

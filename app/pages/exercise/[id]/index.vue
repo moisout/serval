@@ -115,40 +115,6 @@ const editExercise = () => {
 
 <style lang="scss" scoped>
 .exercise {
-  .exercise-title-section {
-    display: flex;
-    justify-content: space-between;
-    z-index: 10;
-    position: relative;
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-
-    .exercise-actions {
-      display: flex;
-      gap: 10px;
-      height: 40px;
-
-      .exercise-delete {
-        margin: auto 0;
-      }
-    }
-
-    .exercise-info {
-      display: flex;
-      flex-direction: column;
-
-      .exercise-title {
-        font-size: 1.8rem;
-        margin-bottom: 5px;
-      }
-
-      .exercise-topic {
-        font-size: 1.2rem;
-      }
-    }
-  }
-
   .exercise-content {
     max-width: 900px;
     width: 100%;
