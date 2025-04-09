@@ -57,6 +57,20 @@
       "when": 1744094909261,
       "tag": "0007_uneven_malcolm_colcord",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1744182552224,
+      "tag": "0008_tidy_captain_stacy",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1744188725783,
+      "tag": "0009_omniscient_firelord",
+      "breakpoints": true
     }
   ]
 }

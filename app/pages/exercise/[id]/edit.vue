@@ -37,7 +37,7 @@ onMounted(async () => {
 
 const saveExercise = async () => {
   await $fetch(`/api/exercises/${exercise.value?.id}`, {
-    method: 'PUT' as any,
+    method: 'PUT',
     body: exercise.value,
     credentials: 'include'
   })

@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { NPageHeader, NSpace, NButton } from 'naive-ui'
+import {
+  NPageHeader,
+  NBreadcrumb,
+  NBreadcrumbItem,
+  NSpace,
+  NButton
+} from 'naive-ui'
 
 const headers = useRequestHeaders(['cookie'])
 const { data: users } = useFetch('/api/admin/users', {
@@ -21,6 +27,26 @@ useHead({
 <template>
   <n-page-header>
     <template #title>Nutzer</template>
+    <template #header>
+      <n-breadcrumb>
+        <n-breadcrumb-item @click="$router.push('/')">
+          Admin
+        </n-breadcrumb-item>
+        <n-breadcrumb-item>Nutzer</n-breadcrumb-item>
+      </n-breadcrumb>
+    </template>
+    <template #extra>
+      <n-space>
+        <nuxt-link to="/admin/access">
+          <n-button>
+            <template #icon>
+              <Icon name="material-symbols:key-outline-rounded" />
+            </template>
+            Zugangschlüssel verwalten</n-button
+          >
+        </nuxt-link>
+      </n-space>
+    </template>
   </n-page-header>
   <div class="users-list" v-if="users">
     <div class="users-list-inner">

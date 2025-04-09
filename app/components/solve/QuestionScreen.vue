@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { NFlex } from 'naive-ui'
 defineProps<{
   question: Question
 }>()
@@ -7,6 +8,21 @@ defineProps<{
 <template>
   <div class="question-screen">
     <p class="question-text">{{ question.question }}</p>
+    <p class="additional-text">
+      {{ question.additionalText }}
+    </p>
+    <n-flex justify="space-evenly">
+      <Icon
+        name="material-symbols:radio-button-checked-outline"
+        size="160"
+        class="push-button-green"
+      />
+      <Icon
+        name="material-symbols:radio-button-checked-outline"
+        size="160"
+        class="push-button-red"
+      />
+    </n-flex>
   </div>
 </template>
 
@@ -21,11 +37,20 @@ defineProps<{
   gap: 50px;
 
   .question-text {
+    font-size: 3.5rem;
+  }
+
+  .additional-text {
     font-size: 3rem;
   }
 
-  .push-button {
+  .push-button-green {
     color: green;
+    margin: 0 40px;
+  }
+  .push-button-red {
+    color: red;
+    margin: 0 40px;
   }
 }
 </style>

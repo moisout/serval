@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { NButton } from 'naive-ui'
+
 definePageMeta({
   layout: 'exercise'
 })
@@ -23,23 +25,76 @@ const yellowButton = () => {
     currentScreen.value = 0
     playScreenAudio()
   } else if (currentScreen.value < questionsCount.value) {
-    currentScreen.value++
     playScreenAudio()
   } else {
     router.push(`/exercise/${route.params.id}`)
   }
 }
 
-const redButton = () => {}
+const currentlySpeaking = ref(false)
 
-const greenButton = () => {}
+const correctScreenVisible = ref(false)
+const incorrectScreenVisible = ref(false)
+
+const redButton = async () => {
+  const currentQuestion = exercise.value?.questions[currentScreen.value]
+  if (currentQuestion?.correctAnswer === 'no') {
+    correctScreenVisible.value = true
+    await playScreenAudio()
+    correctScreenVisible.value = false
+  } else {
+    incorrectScreenVisible.value = true
+    await playScreenAudio()
+    incorrectScreenVisible.value = false
+  }
+  storeAnswer('no')
+  currentScreen.value++
+  await playScreenAudio()
+}
+
+const greenButton = async () => {
+  const currentQuestion = exercise.value?.questions[currentScreen.value]
+  if (currentQuestion?.correctAnswer === 'yes') {
+    correctScreenVisible.value = true
+    await playScreenAudio()
+    correctScreenVisible.value = false
+  } else {
+    incorrectScreenVisible.value = true
+    await playScreenAudio()
+    incorrectScreenVisible.value = false
+  }
+  storeAnswer('yes')
+  currentScreen.value++
+  await playScreenAudio()
+}
+
+const storeAnswer = async (answer: string) => {
+  const currentQuestion = exercise.value?.questions[currentScreen.value]
+  if (currentQuestion) {
+    await $fetch(
+      `/api/exercises/${exercise.value?.id}/answers`,
+      {
+        method: 'POST',
+        body: {
+          answer,
+          questionId: currentQuestion.id,
+        },
+        credentials: 'include'
+      }
+    )
+  }
+}
 
 const onButtonPress = (event: KeyboardEvent) => {
+  if (currentlySpeaking.value) {
+    return
+  }
+
   if (event.key === 'ArrowLeft') {
     yellowButton()
-  } else if (event.key === 'ArrowRight') {
-    redButton()
   } else if (event.key === 'ArrowDown') {
+    redButton()
+  } else if (event.key === 'ArrowUp') {
     greenButton()
   }
 }
@@ -47,13 +102,21 @@ const onButtonPress = (event: KeyboardEvent) => {
 const audioElement = ref<HTMLAudioElement | null>(null)
 
 const playScreenAudio = async () => {
+  currentlySpeaking.value = true
+
   let textToPlay = ''
-  if (currentScreen.value === -1) {
-    textToPlay = defaultTexts.startScreen
-  } else if (currentScreen.value < questionsCount.value) {
-    textToPlay = getSpokenText(exercise.value?.questions[currentScreen.value])
+  if (correctScreenVisible.value) {
+    textToPlay = defaultTexts.correct
+  } else if (incorrectScreenVisible.value) {
+    textToPlay = defaultTexts.incorrect
   } else {
-    textToPlay = defaultTexts.endScreen
+    if (currentScreen.value === -1) {
+      textToPlay = defaultTexts.startScreen
+    } else if (currentScreen.value < questionsCount.value) {
+      textToPlay = getSpokenText(exercise.value?.questions[currentScreen.value])
+    } else if (currentScreen.value === questionsCount.value) {
+      textToPlay = defaultTexts.endScreen
+    }
   }
 
   const audioResponse = await $fetch('/api/tts/synthesize', {
@@ -77,14 +140,31 @@ const playScreenAudio = async () => {
     audioElement.value?.removeEventListener('canplay', playAudio)
     audioElement.value = null
   }
-  audioElement.value = new Audio(audioUrl)
-  audioElement.value.addEventListener('canplay', playAudio)
+  return new Promise((resolve) => {
+    audioElement.value = new Audio(audioUrl)
+
+    const ended = () => {
+      currentlySpeaking.value = false
+      audioElement.value?.removeEventListener('ended', ended)
+      resolve(true)
+    }
+
+    audioElement.value.addEventListener('ended', ended)
+    audioElement.value.addEventListener('canplay', playAudio)
+  })
 }
 
-const playAudio = () => {
+const playAudio = async () => {
   if (audioElement.value) {
     audioElement.value.play()
   }
+  return new Promise((resolve) => {
+    const resolvePromise = () => {
+      resolve(true)
+      audioElement.value?.removeEventListener('canplay', resolvePromise)
+    }
+    audioElement.value?.addEventListener('ended', resolvePromise)
+  })
 }
 
 onMounted(() => {
@@ -104,6 +184,16 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="solve" v-if="exercise">
+    <div class="status">
+      <nuxt-link :to="`/exercise/${route.params.id}`">
+        <n-button>
+          <template #icon>
+            <Icon name="material-symbols:cancel-outline-rounded" />
+          </template>
+          Übung abbrechen
+        </n-button>
+      </nuxt-link>
+    </div>
     <div
       class="exercise-progress"
       v-if="currentScreen > -1 && currentScreen < questionsCount"
@@ -126,6 +216,11 @@ onBeforeUnmount(() => {
       </div>
     </div>
     <SolveEndScreen v-else />
+    <SolveOverlay v-if="correctScreenVisible" :text="defaultTexts.correct" />
+    <SolveOverlay
+      v-if="incorrectScreenVisible"
+      :text="defaultTexts.incorrect"
+    />
   </div>
   <div v-else>...</div>
 </template>
@@ -137,6 +232,13 @@ onBeforeUnmount(() => {
   height: 100%;
   background-color: globals.$bg-primary;
 
+  .status {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+  }
+
   .exercise-progress {
     position: absolute;
     top: 0;
@@ -144,7 +246,7 @@ onBeforeUnmount(() => {
     width: 100%;
     display: flex;
     justify-content: center;
-    z-index: 9999;
+    z-index: 999;
 
     .exercise-progress-text {
       font-size: 3.2rem;

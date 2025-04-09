@@ -48,3 +48,20 @@ export const questionsTable = sqliteTable('questions', {
     .notNull()
     .default(sql`(unixepoch())`)
 })
+
+export const resultsTable = sqliteTable('results', {
+  id: text('id').primaryKey(),
+  answer: text('answer').notNull(),
+  exerciseId: text('exercise_id')
+    .notNull()
+    .references(() => exercisesTable.id),
+  userId: text('user_id')
+    .notNull()
+    .references(() => usersTable.id),
+  questionId: text('question_id')
+    .notNull()
+    .references(() => questionsTable.id),
+  createdAt: integer('created_at', { mode: 'timestamp' })
+    .notNull()
+    .default(sql`(unixepoch())`)
+})

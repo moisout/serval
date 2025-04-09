@@ -1,6 +1,12 @@
+<script setup lang="ts">
+defineProps<{
+  text: string
+}>()
+</script>
+
 <template>
-  <div class="end-screen">
-    <p class="end-text">{{ defaultTexts.endScreen }}</p>
+  <div class="correct-screen">
+    <p class="correct-text">{{ text }}</p>
     <Icon
       name="material-symbols:radio-button-checked-outline"
       size="100"
@@ -10,16 +16,21 @@
 </template>
 
 <style lang="scss" scoped>
-.end-screen {
-  height: 100%;
+.correct-screen {
   background-color: globals.$gray-100;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
 
-  .end-text {
+  .correct-text {
     font-size: 3.2rem;
   }
 
