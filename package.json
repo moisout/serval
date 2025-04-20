@@ -13,22 +13,22 @@
     "db:generate": "drizzle-kit generate"
   },
   "devDependencies": {
-    "@iconify-json/material-symbols": "1.2.17",
+    "@iconify-json/material-symbols": "1.2.20",
     "@types/uuid": "10.0.0",
-    "drizzle-kit": "0.30.6",
+    "drizzle-kit": "0.31.0",
     "prettier": "3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "5.8.3",
     "vueuc": "^0.4.64",
-    "wrangler": "4.9.1"
+    "wrangler": "4.12.0"
   },
   "dependencies": {
     "@nuxt/fonts": "0.11.1",
-    "@nuxt/icon": "1.11.0",
+    "@nuxt/icon": "1.12.0",
     "@nuxthub/core": "0.8.24",
     "@sidebase/nuxt-auth": "0.10.1",
     "bcryptjs": "3.0.2",
-    "drizzle-orm": "0.41.0",
+    "drizzle-orm": "0.42.0",
     "naive-ui": "^2.41.0",
     "nuxt": "3.16.2",
     "nuxtjs-naive-ui": "1.0.2",
