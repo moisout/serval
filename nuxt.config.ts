@@ -17,6 +17,13 @@ export default defineNuxtConfig({
     }
   },
 
+  runtimeConfig: {
+    public: {
+      licenseNotice: '',
+      licenseText: ''
+    }
+  },
+
   routeRules: {
     '/admin': { redirect: '/admin/users' }
   },
@@ -68,6 +75,7 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@sidebase/nuxt-auth',
     '@nuxthub/core',
-    'nuxtjs-naive-ui'
+    'nuxtjs-naive-ui',
+    '@nuxtjs/mdc'
   ]
 })

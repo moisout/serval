@@ -69,9 +69,7 @@ const warnLeave = () => {
     </template>
   </n-page-header>
   <div class="create-outer">
-    <div class="create">
       <CreateForm :exercise="exercise" />
-    </div>
   </div>
 </template>
 
@@ -82,13 +80,5 @@ const warnLeave = () => {
   margin: 0 auto;
   padding: 20px 0;
 
-  .create {
-    border: solid 1px globals.$gray-300;
-    padding: 20px;
-    border-radius: 10px;
-    z-index: 10;
-    position: relative;
-    background-color: globals.$bg-primary;
-  }
 }
 </style>

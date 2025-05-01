@@ -49,19 +49,21 @@ const moveQuestionDown = (question: Question) => {
 
 <template>
   <div class="create-form">
-    <n-input
-      v-model:value="exercise.name"
-      size="large"
-      placeholder="Titel des Aufgabenbuchs"
-    >
-      <template #prefix><p class="label">Titel:</p></template>
-    </n-input>
-    <n-input
-      v-model:value="exercise.topic"
-      placeholder="Thema des Aufgabenbuchs"
+    <div class="main-create">
+      <n-input
+        v-model:value="exercise.name"
+        size="large"
+        placeholder="Titel des Aufgabenbuchs"
       >
-      <template #prefix><p class="label">Thema:</p></template>
-    </n-input>
+        <template #prefix><p class="label">Titel:</p></template>
+      </n-input>
+      <n-input
+        v-model:value="exercise.topic"
+        placeholder="Thema des Aufgabenbuchs"
+      >
+        <template #prefix><p class="label">Thema:</p></template>
+      </n-input>
+    </div>
 
     <div
       class="form-question"
@@ -85,6 +87,18 @@ const moveQuestionDown = (question: Question) => {
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  .main-create {
+    border: solid 1px globals.$gray-300;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 10;
+    position: relative;
+    background-color: globals.$bg-primary;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
   .label {
     font-weight: 500;

@@ -8,6 +8,8 @@ definePageMeta({ auth: false })
     <template #title>Register</template>
   </n-page-header>
   <div class="register">
+    <PrivacyNotice />
+    <LicenseNotice />
     <RegisterForm />
   </div>
 </template>
@@ -26,5 +28,8 @@ definePageMeta({ auth: false })
   padding: 20px 0;
   z-index: 10;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 </style>

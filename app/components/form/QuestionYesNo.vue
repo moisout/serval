@@ -109,7 +109,7 @@ const moveQuestionDown = () => {
             v-if="correctAnswer === 'no'"
           />
           <Icon
-            class="question-radio-icon red"
+            class="question-radio-icon green"
             name="material-symbols:radio-button-checked-outline"
           />Grüner Knopf
         </label>
@@ -137,7 +137,7 @@ const moveQuestionDown = () => {
             v-if="correctAnswer === 'yes'"
           />
           <Icon
-            class="question-radio-icon green"
+            class="question-radio-icon red"
             name="material-symbols:radio-button-checked-outline"
           />Roter Knopf
         </label>
