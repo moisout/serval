@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
     role: body.role
   }
 
-  const result = drizzle
+  const result = await drizzle
     .insert(accessCodesTable)
     .values(newAccessCode)
     .execute()
