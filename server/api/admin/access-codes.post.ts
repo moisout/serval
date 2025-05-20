@@ -19,12 +19,25 @@ export default defineEventHandler(async (event) => {
 
   const drizzle = useDrizzle()
 
-  drizzle
+  const newAccessCode = {
+    id: v4(),
+    code: v4().slice(0, 6),
+    role: body.role
+  }
+
+  const result = drizzle
     .insert(accessCodesTable)
-    .values({
-      id: v4(),
-      code: v4().slice(0, 6),
-      role: body.role
-    })
+    .values(newAccessCode)
     .execute()
+
+  if (!result) {
+    setResponseStatus(event, 500)
+    return {
+      error: 'Failed to create access code'
+    }
+  }
+  return {
+    success: true,
+    accessCode: newAccessCode
+  }
 })
