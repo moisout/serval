@@ -6,8 +6,8 @@
         <span class="title-text">serval</span>
       </NuxtLink>
       <div class="links">
-        <NuxtLink to="/privacy" class="link">Privacy</NuxtLink>
-        <NuxtLink to="/license" class="link">License</NuxtLink>
+        <NuxtLink to="/privacy" class="link">Datenschutz</NuxtLink>
+        <NuxtLink to="/license" class="link">Lizenz</NuxtLink>
       </div>
     </div>
     <UserMenu />
