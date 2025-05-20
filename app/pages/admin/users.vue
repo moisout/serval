@@ -7,11 +7,7 @@ import {
   NButton
 } from 'naive-ui'
 
-const headers = useRequestHeaders(['cookie'])
-const { data: users } = useFetch('/api/admin/users', {
-  headers,
-  credentials: 'include'
-})
+const { data: users } = useFetch('/api/admin/users')
 
 useHead({
   title: 'Nutzer',
