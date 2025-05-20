@@ -13,31 +13,31 @@
     "db:generate": "drizzle-kit generate"
   },
   "devDependencies": {
-    "@iconify-json/material-symbols": "1.2.20",
+    "@iconify-json/material-symbols": "1.2.21",
     "@types/uuid": "10.0.0",
-    "drizzle-kit": "0.31.0",
+    "drizzle-kit": "0.31.1",
     "prettier": "3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "5.8.3",
     "vueuc": "^0.4.64",
-    "wrangler": "4.13.2"
+    "wrangler": "4.16.0"
   },
   "dependencies": {
-    "@nuxt/fonts": "0.11.2",
-    "@nuxt/icon": "1.12.0",
-    "@nuxthub/core": "0.8.25",
+    "@nuxt/fonts": "0.11.4",
+    "@nuxt/icon": "1.13.0",
+    "@nuxthub/core": "0.8.27",
     "@nuxtjs/mdc": "0.17.0",
     "@sidebase/nuxt-auth": "0.10.1",
     "bcryptjs": "3.0.2",
     "drizzle-orm": "0.43.1",
     "naive-ui": "^2.41.0",
-    "nuxt": "3.17.1",
+    "nuxt": "3.17.3",
     "nuxtjs-naive-ui": "1.0.2",
     "readable-stream": "^4.7.0",
-    "sass": "1.87.0",
+    "sass": "1.89.0",
     "unenv": "1.10.0",
     "uuid": "11.1.0",
-    "vue": "3.5.13",
+    "vue": "3.5.14",
     "vue-router": "4.5.1"
   },
   "trustedDependencies": [
