@@ -8,7 +8,14 @@ export default defineEventHandler(async (event) => {
 
   const query = getQuery(event)
 
-  const cleanedText = text.trim()
+  const cleanedText = text?.trim()
+
+  if (!cleanedText) {
+    setResponseStatus(event, 400)
+    return {
+      error: 'Missing text'
+    }
+  }
 
   const textHash = await hashString(cleanedText)
   const fileName = `${textHash}.mp3`
@@ -34,7 +41,7 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const audioResponse = await $fetch('http://tts-relay.m0.is/api/tts', {
+  const audioResponse = await $fetch('https://tts-relay.m0.is/api/tts', {
     method: 'POST',
     body: {
       text: cleanedText,
