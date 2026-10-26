@@ -30,10 +30,9 @@ export default defineEventHandler(async (event) => {
     ...body
   }
 
-  const updateResults = await drizzle
+  await drizzle
     .update(exercisesTable)
     .set({
-      authorId: exerciseToUpdate.authorId,
       name: exerciseToUpdate.name,
       topic: exerciseToUpdate.topic
     })
@@ -59,11 +58,15 @@ export default defineEventHandler(async (event) => {
       .delete(questionsTable)
       .where(eq(questionsTable.id, question.id))
   }
+  // The position in the submitted list is the question order
+  const getOrder = (question: Exercise['questions'][number]) =>
+    exerciseToUpdate.questions.indexOf(question)
+
   // Insert new questions
   for (const question of questionsToInsert) {
     await drizzle.insert(questionsTable).values({
       id: question.id,
-      // order: question.order,
+      order: getOrder(question),
       exerciseId: exerciseId,
       question: question.question,
       correctAnswer: question.correctAnswer,
@@ -76,7 +79,7 @@ export default defineEventHandler(async (event) => {
     await drizzle
       .update(questionsTable)
       .set({
-        // order: question.order,
+        order: getOrder(question),
         question: question.question,
         correctAnswer: question.correctAnswer,
         additionalText: question.additionalText
@@ -84,16 +87,8 @@ export default defineEventHandler(async (event) => {
       .where(eq(questionsTable.id, question.id))
   }
 
-  if (updateResults.success) {
-    return {
-      success: true,
-      message: 'Exercise updated successfully'
-    }
-  }
-
-  setResponseStatus(event, 500)
   return {
-    success: false,
-    error: 'Failed to update exercise'
+    success: true,
+    message: 'Exercise updated successfully'
   }
 })

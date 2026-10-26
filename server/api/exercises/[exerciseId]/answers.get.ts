@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
       )
     )
     .groupBy(questionsTable.id)
-    .orderBy(questionsTable.createdAt)
+    .orderBy(questionsTable.order, questionsTable.createdAt)
 
   const questions = questionsResults.map((questionsResult) => ({
     questions: questionsResult.questions,

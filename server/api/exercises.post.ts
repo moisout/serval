@@ -19,8 +19,9 @@ export default defineEventHandler(async (event) => {
     topic: body.topic
   })
 
-  const questionsToInsert = body.questions.map((question) => ({
+  const questionsToInsert = body.questions.map((question, index) => ({
     id: question.id,
+    order: index,
     exerciseId: body.id,
     question: question.question,
     additionalText: question.additionalText,

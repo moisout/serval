@@ -1,9 +1,5 @@
 import { eq } from 'drizzle-orm'
-import {
-  questionsTable,
-  resultsTable,
-  usersTable
-} from '~~/server/db/schema'
+import { questionsTable, resultsTable, usersTable } from '~~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
   const user = await requireTeacherSession(event)
@@ -35,6 +31,7 @@ export default defineEventHandler(async (event) => {
     .select()
     .from(questionsTable)
     .where(eq(questionsTable.exerciseId, exerciseId))
+    .orderBy(questionsTable.order, questionsTable.createdAt)
 
   const resultsByUser = usersResults
     .map((user) => {

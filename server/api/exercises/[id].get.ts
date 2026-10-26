@@ -1,8 +1,5 @@
-import {
-  exercisesTable,
-  questionsTable,
-  usersTable
-} from '~~/server/db/schema'
+import { asc } from 'drizzle-orm'
+import { exercisesTable, questionsTable, usersTable } from '~~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
   await requireUserSession(event)
@@ -20,7 +17,8 @@ export default defineEventHandler(async (event) => {
   })
 
   const exerciseQuestions = await drizzle.query.questionsTable.findMany({
-    where: eq(questionsTable.exerciseId, exerciseId)
+    where: eq(questionsTable.exerciseId, exerciseId),
+    orderBy: [asc(questionsTable.order), asc(questionsTable.createdAt)]
   })
 
   let exerciseAuthor = 'unknown'
