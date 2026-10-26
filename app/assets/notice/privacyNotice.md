@@ -48,4 +48,4 @@ Nutzer*innen haben das Recht auf:
 - Berichtigung unrichtiger Daten  
 - Löschung ihrer Daten
 
-Die Löschung kann eigenständig erfolgen, indem der Account innerhalb der App gelöscht wird.
+Accounts können von Lehrpersonen innerhalb der App gelöscht werden. Wenden Sie sich dafür an Ihre Lehrperson oder an [serval@m0.is](mailto:serval@m0.is). Mit dem Account werden auch alle zugehörigen Daten gelöscht, also die Resultate und, bei Lehrpersonen, die erstellten Aufgabenbücher.
