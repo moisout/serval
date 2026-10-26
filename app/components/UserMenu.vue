@@ -5,19 +5,21 @@ const { data, status, signOut } = useAuth()
 const dialog = useDialog()
 
 const logout = () => {
-  dialog.warning({
-    title: 'Abmelden',
-    content: 'Möchtest du dich wirklich abmelden?',
-    positiveText: 'Abbrechen',
-    negativeText: 'Ja, abmelden',
-    onNegativeClick: () => signOut({ callbackUrl: '/login' }),
-    negativeButtonProps: {
-      size: 'large'
-    },
-    positiveButtonProps: {
-      size: 'large'
-    }
-  })
+  dialog.warning(
+    focusDialogCancel({
+      title: 'Abmelden',
+      content: 'Möchtest du dich wirklich abmelden?',
+      positiveText: 'Abbrechen',
+      negativeText: 'Ja, abmelden',
+      onNegativeClick: () => signOut({ callbackUrl: '/login' }),
+      negativeButtonProps: {
+        size: 'large'
+      },
+      positiveButtonProps: {
+        size: 'large'
+      }
+    })
+  )
 }
 </script>
 

@@ -29,38 +29,40 @@ const changeUserRole = async () => {
 
 const dialog = useDialog()
 const deleteUser = () => {
-  dialog.error({
-    title: 'WARNUNG',
-    content: () =>
-      h('pre', {
-        innerHTML: `Möchtest du den Nutzer/die Nutzerin "${props.user.username}"
-wirklich löschen?
-Diese Aktion kann nicht rückgängig gemacht werden.
-Dies wird alle Daten des Nutzers löschen!
+  dialog.error(
+    focusDialogCancel({
+      title: 'WARNUNG',
+      content: () =>
+        h('pre', {
+          innerHTML: `Möchtest du den Nutzer/die Nutzerin "${props.user.username}"
+  wirklich löschen?
+  Diese Aktion kann nicht rückgängig gemacht werden.
+  Dies wird alle Daten des Nutzers löschen!
 
-Das bedeutet:
-- Alle erstellten Aufgabenbücher
-- Alle gelösten Aufgaben mit Resultaten
+  Das bedeutet:
+  - Alle erstellten Aufgabenbücher
+  - Alle gelösten Aufgaben mit Resultaten
 
-Falls diese Person eine Lehrperson ist,
-werden ALLE erstellten Aufgabenbücher
-unwiederbringlich gelöscht!`
-      }),
-    positiveText: 'Abbrechen',
-    negativeText: 'Löschen',
-    onNegativeClick: async () => {
-      await fetch(`/api/admin/users/${props.user.id}`, {
-        method: 'DELETE'
-      })
-      emit('refresh')
-    },
-    negativeButtonProps: {
-      size: 'large'
-    },
-    positiveButtonProps: {
-      size: 'large'
-    }
-  })
+  Falls diese Person eine Lehrperson ist,
+  werden ALLE erstellten Aufgabenbücher
+  unwiederbringlich gelöscht!`
+        }),
+      positiveText: 'Abbrechen',
+      negativeText: 'Löschen',
+      onNegativeClick: async () => {
+        await fetch(`/api/admin/users/${props.user.id}`, {
+          method: 'DELETE'
+        })
+        emit('refresh')
+      },
+      negativeButtonProps: {
+        size: 'large'
+      },
+      positiveButtonProps: {
+        size: 'large'
+      }
+    })
+  )
 }
 </script>
 

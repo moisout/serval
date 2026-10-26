@@ -10,24 +10,26 @@ const emit = defineEmits<{
 
 const dialog = useDialog()
 const deleteAccessCode = () => {
-  dialog.warning({
-    title: 'Aufgabenbuch löschen',
-    content: `Möchtest du den Zugangschlüssel wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.`,
-    positiveText: 'Abbrechen',
-    negativeText: 'Löschen',
-    onNegativeClick: async () => {
-      await fetch(`/api/admin/access-codes/${props.accessCode.id}`, {
-        method: 'DELETE'
-      })
-      emit('refresh')
-    },
-    negativeButtonProps: {
-      size: 'large'
-    },
-    positiveButtonProps: {
-      size: 'large'
-    }
-  })
+  dialog.warning(
+    focusDialogCancel({
+      title: 'Aufgabenbuch löschen',
+      content: `Möchtest du den Zugangschlüssel wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.`,
+      positiveText: 'Abbrechen',
+      negativeText: 'Löschen',
+      onNegativeClick: async () => {
+        await fetch(`/api/admin/access-codes/${props.accessCode.id}`, {
+          method: 'DELETE'
+        })
+        emit('refresh')
+      },
+      negativeButtonProps: {
+        size: 'large'
+      },
+      positiveButtonProps: {
+        size: 'large'
+      }
+    })
+  )
 }
 </script>
 

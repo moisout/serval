@@ -28,25 +28,27 @@ const { data: exercise } = useFetch<Exercise>(
 const dialog = useDialog()
 
 const deleteExercise = async () => {
-  dialog.warning({
-    title: 'Aufgabenbuch löschen',
-    content: `Möchtest du das Aufgabenbuch "${exercise.value?.name}" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.`,
-    positiveText: 'Abbrechen',
-    negativeText: 'Löschen',
-    onNegativeClick: async () => {
-      await fetch(`/api/exercises/${route.params.id}`, {
-        method: 'DELETE'
-      })
+  dialog.warning(
+    focusDialogCancel({
+      title: 'Aufgabenbuch löschen',
+      content: `Möchtest du das Aufgabenbuch "${exercise.value?.name}" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.`,
+      positiveText: 'Abbrechen',
+      negativeText: 'Löschen',
+      onNegativeClick: async () => {
+        await fetch(`/api/exercises/${route.params.id}`, {
+          method: 'DELETE'
+        })
 
-      router.push('/')
-    },
-    negativeButtonProps: {
-      size: 'large'
-    },
-    positiveButtonProps: {
-      size: 'large'
-    }
-  })
+        router.push('/')
+      },
+      negativeButtonProps: {
+        size: 'large'
+      },
+      positiveButtonProps: {
+        size: 'large'
+      }
+    })
+  )
 }
 
 const editExercise = () => {

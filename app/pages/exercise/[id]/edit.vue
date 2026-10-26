@@ -46,20 +46,22 @@ const saveExercise = async () => {
 }
 
 const warnLeave = () => {
-  dialog.warning({
-    title: 'Aufgabenbuch nicht gespeichert',
-    content:
-      'Möchtest du das Aufgabenbuch verlassen? Deine Eingaben werden nicht gespeichert.',
-    positiveText: 'Abbrechen',
-    negativeText: 'Ja, verlassen',
-    onNegativeClick: () => router.push('/'),
-    negativeButtonProps: {
-      size: 'large'
-    },
-    positiveButtonProps: {
-      size: 'large'
-    }
-  })
+  dialog.warning(
+    focusDialogCancel({
+      title: 'Aufgabenbuch nicht gespeichert',
+      content:
+        'Möchtest du das Aufgabenbuch verlassen? Deine Eingaben werden nicht gespeichert.',
+      positiveText: 'Abbrechen',
+      negativeText: 'Ja, verlassen',
+      onNegativeClick: () => router.push('/'),
+      negativeButtonProps: {
+        size: 'large'
+      },
+      positiveButtonProps: {
+        size: 'large'
+      }
+    })
+  )
 }
 </script>
 
