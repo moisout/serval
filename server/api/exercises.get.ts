@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
 
   return (exercises || []).map((exercise) => ({
     ...exercise,
-    author: exercise.author || 'unknown',
+    author: exercise.author || 'Unbekannt',
     questions: []
   }))
 })

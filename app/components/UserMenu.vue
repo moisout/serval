@@ -30,7 +30,9 @@ const logout = () => {
       <Icon class="user-icon" name="material-symbols:account-circle" />
       <div class="user-name-inner">
         <span class="user-text"> {{ data?.username }}</span>
-        <span class="user-role">{{ data?.role }}</span>
+        <span class="user-role">{{
+          userRoles[data?.role as keyof typeof userRoles] ?? data?.role
+        }}</span>
       </div>
     </div>
     <NuxtLink to="/admin" v-if="isTeacher">

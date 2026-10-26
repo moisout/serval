@@ -38,7 +38,7 @@ const error = ref('')
       v-model:value="password"
       size="large"
     />
-    <n-button type="primary" attr-type="submit" size="large">Login</n-button>
+    <n-button type="primary" attr-type="submit" size="large">Anmelden</n-button>
     <NuxtLink to="/register" class="register-link">
       Neuen Account erstellen
     </NuxtLink>

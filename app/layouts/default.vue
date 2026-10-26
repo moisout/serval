@@ -3,7 +3,9 @@ import {
   NConfigProvider,
   NDialogProvider,
   NMessageProvider,
-  NLoadingBarProvider
+  NLoadingBarProvider,
+  deDE,
+  dateDeDE
 } from 'naive-ui'
 
 useHead({
@@ -15,7 +17,11 @@ useHead({
 </script>
 
 <template>
-  <n-config-provider :theme-overrides="themeOverrides">
+  <n-config-provider
+    :theme-overrides="themeOverrides"
+    :locale="deDE"
+    :date-locale="dateDeDE"
+  >
     <n-dialog-provider>
       <n-message-provider>
         <NuxtLoadingIndicator />

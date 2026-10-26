@@ -5,7 +5,7 @@ definePageMeta({ auth: false })
 
 <template>
   <n-page-header class="register-page-header">
-    <template #title>Register</template>
+    <template #title>Registrieren</template>
   </n-page-header>
   <div class="register">
     <PrivacyNotice />

@@ -21,12 +21,12 @@ export default defineEventHandler(async (event) => {
     orderBy: [asc(questionsTable.order), asc(questionsTable.createdAt)]
   })
 
-  let exerciseAuthor = 'unknown'
+  let exerciseAuthor = 'Unbekannt'
   if (exercise?.authorId) {
     const exerciseUser = await drizzle.query.usersTable.findFirst({
       where: eq(usersTable.id, exercise?.authorId)
     })
-    exerciseAuthor = exerciseUser?.username ?? 'unknown'
+    exerciseAuthor = exerciseUser?.username ?? 'Unbekannt'
   }
 
   if (!exercise) {

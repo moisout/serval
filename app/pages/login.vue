@@ -5,7 +5,7 @@ definePageMeta({ auth: false })
 
 <template>
   <n-page-header class="login-page-header">
-    <template #title>Login</template>
+    <template #title>Anmelden</template>
   </n-page-header>
   <div class="login">
     <PrivacyNotice />
