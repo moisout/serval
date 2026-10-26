@@ -82,6 +82,9 @@ const storeAnswer = async (answer: string) => {
   }
 }
 
+const isQuestionScreen = () =>
+  currentScreen.value >= 0 && currentScreen.value < questionsCount.value
+
 const onButtonPress = (event: KeyboardEvent) => {
   if (currentlySpeaking.value) {
     return
@@ -89,9 +92,9 @@ const onButtonPress = (event: KeyboardEvent) => {
 
   if (event.key === 'ArrowLeft') {
     yellowButton()
-  } else if (event.key === 'ArrowDown') {
+  } else if (event.key === 'ArrowDown' && isQuestionScreen()) {
     redButton()
-  } else if (event.key === 'ArrowUp') {
+  } else if (event.key === 'ArrowUp' && isQuestionScreen()) {
     greenButton()
   }
 }
@@ -116,53 +119,53 @@ const playScreenAudio = async () => {
     }
   }
 
-  const audioResponse = await $fetch('/api/tts/synthesize', {
-    method: 'POST',
-    body: {
-      text: textToPlay,
-      lang: 'de-DE'
+  // Always release the key lock, otherwise a failed or blocked playback
+  // (e.g. autoplay before the first user interaction) disables the arrow keys
+  try {
+    const audioResponse = await $fetch('/api/tts/synthesize', {
+      method: 'POST',
+      body: {
+        text: textToPlay,
+        lang: 'de-DE'
+      }
+    })
+    const audioError = (audioResponse as any)?.error
+    if (!audioResponse || audioError) {
+      console.log(audioError || 'Audio not found')
+      return
     }
-  })
-  const audioError = (audioResponse as any)?.error
-  if (!audioResponse || audioError) {
-    console.log(audioError || 'Audio not found')
-    return
-  }
-  const audioBlob = new Blob([audioResponse as unknown as string], {
-    type: 'audio/mpeg'
-  })
-  const audioUrl = URL.createObjectURL(audioBlob)
-  if (audioElement.value) {
-    audioElement.value.pause()
-    audioElement.value?.removeEventListener('canplay', playAudio)
-    audioElement.value = null
-  }
-  return new Promise((resolve) => {
-    audioElement.value = new Audio(audioUrl)
-    audioElement.value.playbackRate = defaultValues.playbackRate
-
-    const ended = () => {
-      currentlySpeaking.value = false
-      audioElement.value?.removeEventListener('ended', ended)
-      resolve(true)
+    const audioBlob = new Blob([audioResponse as unknown as string], {
+      type: 'audio/mpeg'
+    })
+    const audioUrl = URL.createObjectURL(audioBlob)
+    if (audioElement.value) {
+      audioElement.value.pause()
+      audioElement.value = null
     }
+    await new Promise<void>((resolve) => {
+      const audio = new Audio(audioUrl)
+      audio.playbackRate = defaultValues.playbackRate
+      audioElement.value = audio
 
-    audioElement.value.addEventListener('ended', ended)
-    audioElement.value.addEventListener('canplay', playAudio)
-  })
-}
+      const done = () => {
+        audio.removeEventListener('ended', done)
+        audio.removeEventListener('error', done)
+        URL.revokeObjectURL(audioUrl)
+        resolve()
+      }
 
-const playAudio = async () => {
-  if (audioElement.value) {
-    audioElement.value.play()
+      audio.addEventListener('ended', done)
+      audio.addEventListener('error', done)
+      audio.play().catch((error) => {
+        console.log(error)
+        done()
+      })
+    })
+  } catch (error) {
+    console.log(error)
+  } finally {
+    currentlySpeaking.value = false
   }
-  return new Promise((resolve) => {
-    const resolvePromise = () => {
-      resolve(true)
-      audioElement.value?.removeEventListener('canplay', resolvePromise)
-    }
-    audioElement.value?.addEventListener('ended', resolvePromise)
-  })
 }
 
 onMounted(() => {
@@ -213,7 +216,6 @@ onBeforeUnmount(() => {
     </div>
     <SolveStartScreen v-if="currentScreen === -1" />
     <div class="question-screens" v-else-if="currentScreen < questionsCount">
-      {{ currentScreen }}
       <div
         class="question-screen"
         v-for="(question, index) in exercise.questions"
