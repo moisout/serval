@@ -49,13 +49,13 @@ const roles = [
 
 <template>
   <n-page-header>
-    <template #title>Zugangschlüssel</template>
+    <template #title>Zugangsschlüssel</template>
     <template #header>
       <n-breadcrumb>
         <n-breadcrumb-item @click="$router.push('/')">
           Admin
         </n-breadcrumb-item>
-        <n-breadcrumb-item>Zugangschlüssel</n-breadcrumb-item>
+        <n-breadcrumb-item>Zugangsschlüssel</n-breadcrumb-item>
       </n-breadcrumb>
     </template>
     <template #extra>
@@ -70,7 +70,7 @@ const roles = [
           <template #icon>
             <Icon name="material-symbols:add-2-rounded" />
           </template>
-          Zugangschlüssel erstellen</n-button
+          Zugangsschlüssel erstellen</n-button
         >
       </n-flex>
     </template>

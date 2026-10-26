@@ -40,7 +40,7 @@ useHead({
             <template #icon>
               <Icon name="material-symbols:key-outline-rounded" />
             </template>
-            Zugangschlüssel verwalten</n-button
+            Zugangsschlüssel verwalten</n-button
           >
         </nuxt-link>
       </n-space>

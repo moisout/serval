@@ -100,7 +100,7 @@ const editExercise = () => {
               <template v-slot:icon>
                 <Icon name="material-symbols:play-arrow-outline-rounded"
               /></template>
-              Aufgabenbuch Beginnen
+              Aufgabenbuch beginnen
             </n-button>
           </nuxt-link>
         </n-space>

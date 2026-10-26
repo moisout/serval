@@ -52,7 +52,7 @@ const error = ref('')
     <n-button type="primary" attr-type="submit" size="large"
       >Registrieren</n-button
     >
-    <NuxtLink to="/login" class="login-link"> Stadtdessen einloggen </NuxtLink>
+    <NuxtLink to="/login" class="login-link"> Stattdessen einloggen </NuxtLink>
   </form>
 </template>
 

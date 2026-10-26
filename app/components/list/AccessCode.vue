@@ -12,8 +12,8 @@ const dialog = useDialog()
 const deleteAccessCode = () => {
   dialog.warning(
     focusDialogCancel({
-      title: 'Aufgabenbuch löschen',
-      content: `Möchtest du den Zugangschlüssel wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.`,
+      title: 'Zugangsschlüssel löschen',
+      content: `Möchtest du den Zugangsschlüssel wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.`,
       positiveText: 'Abbrechen',
       negativeText: 'Löschen',
       onNegativeClick: async () => {

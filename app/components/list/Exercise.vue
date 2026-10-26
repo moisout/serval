@@ -12,8 +12,6 @@ const questionsText = computed(() => {
     return `${props.exercise.questionCount} Fragen`
   }
 })
-
-const topicText = computed(() => props.exercise.topic?.slice(0, 10))
 </script>
 
 <template>
@@ -22,8 +20,10 @@ const topicText = computed(() => props.exercise.topic?.slice(0, 10))
 
     <p class="exercise-author">{{ exercise.author }}</p>
     <div class="exercise-topic">
-      <span>{{ topicText }}</span
-      ><span> {{ questionsText }}</span>
+      <span class="topic-name" :title="exercise.topic">{{
+        exercise.topic
+      }}</span
+      ><span class="question-count">{{ questionsText }}</span>
     </div>
   </NuxtLink>
 </template>
@@ -79,6 +79,18 @@ const topicText = computed(() => props.exercise.topic?.slice(0, 10))
     width: 100%;
     padding: 0 10px 10px 10px;
     color: globals.$text-secondary;
+
+    // Shorten long topics with an ellipsis instead of cutting words off
+    .topic-name {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .question-count {
+      flex-shrink: 0;
+      margin-left: 10px;
+    }
   }
 }
 </style>
