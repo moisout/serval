@@ -7,7 +7,7 @@ import {
   NButton
 } from 'naive-ui'
 
-const { data: users } = useFetch('/api/admin/users')
+const { data: users, refresh } = useFetch('/api/admin/users')
 
 useHead({
   title: 'Nutzer',
@@ -50,7 +50,12 @@ useHead({
         <p>Benutzername</p>
         <p>Rolle</p>
       </div>
-      <ListUser v-for="user in users" :user="user" :key="user.id" />
+      <ListUser
+        v-for="user in users"
+        :user="user"
+        :key="user.id"
+        @refresh="refresh"
+      />
     </div>
   </div>
 </template>
