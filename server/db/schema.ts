@@ -40,7 +40,7 @@ export const exercisesTable = sqliteTable('exercises', {
 
 export const questionsTable = sqliteTable('questions', {
   id: text('id').primaryKey(),
-  // order: integer('order').notNull(),
+  order: integer('order').notNull().default(0),
   exerciseId: text('exercise_id')
     .notNull()
     .references(() => exercisesTable.id, {
@@ -79,4 +79,11 @@ export const resultsTable = sqliteTable('results', {
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
     .default(sql`(unixepoch())`)
+})
+
+// Fixed-window request counters, keyed by `${name}:${client}:${window}`
+export const rateLimitsTable = sqliteTable('rate_limits', {
+  key: text('key').primaryKey(),
+  count: integer('count').notNull().default(0),
+  expiresAt: integer('expires_at').notNull()
 })
