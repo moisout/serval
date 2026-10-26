@@ -7,6 +7,8 @@ import {
   NButton
 } from 'naive-ui'
 
+definePageMeta({ middleware: 'teacher' })
+
 import { v4 } from 'uuid'
 import { useDialog } from 'naive-ui'
 

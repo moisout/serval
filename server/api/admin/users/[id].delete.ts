@@ -1,6 +1,14 @@
-import { usersTable } from '~~/server/db/schema'
+import { inArray } from 'drizzle-orm'
+import {
+  exercisesTable,
+  questionsTable,
+  resultsTable,
+  usersTable
+} from '~~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
+  await requireTeacherSession(event)
+
   const userId = getRouterParam(event, 'id')
 
   if (!userId) {
@@ -12,19 +20,30 @@ export default defineEventHandler(async (event) => {
   }
   const drizzle = useDrizzle()
 
-  const result = await drizzle
-    .delete(usersTable)
-    .where(eq(usersTable.id, userId))
+  // exercises.author_id can't be null, so the user's exercises go with them
+  const authoredExercises = await drizzle
+    .select({ id: exercisesTable.id })
+    .from(exercisesTable)
+    .where(eq(exercisesTable.authorId, userId))
+  const authoredExerciseIds = authoredExercises.map((exercise) => exercise.id)
 
-  if (result?.success) {
-    return {
-      success: true,
-      message: 'User deleted successfully'
-    }
+  if (authoredExerciseIds.length) {
+    await drizzle
+      .delete(resultsTable)
+      .where(inArray(resultsTable.exerciseId, authoredExerciseIds))
+    await drizzle
+      .delete(questionsTable)
+      .where(inArray(questionsTable.exerciseId, authoredExerciseIds))
+    await drizzle
+      .delete(exercisesTable)
+      .where(inArray(exercisesTable.id, authoredExerciseIds))
   }
-  setResponseStatus(event, 400)
+
+  await drizzle.delete(resultsTable).where(eq(resultsTable.userId, userId))
+  await drizzle.delete(usersTable).where(eq(usersTable.id, userId))
+
   return {
-    success: false,
-    error: 'Failed to delete user'
+    success: true,
+    message: 'User deleted successfully'
   }
 })

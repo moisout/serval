@@ -1,6 +1,8 @@
 import { accessCodesTable } from '~~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
+  await requireTeacherSession(event)
+
   const id = getRouterParam(event, 'id')
 
   if (!id) {

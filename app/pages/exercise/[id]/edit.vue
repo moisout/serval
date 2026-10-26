@@ -8,6 +8,8 @@ import {
   useDialog
 } from 'naive-ui'
 
+definePageMeta({ middleware: 'teacher' })
+
 const router = useRouter()
 const route = useRoute()
 const { data } = useAuth()

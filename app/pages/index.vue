@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { NPageHeader, NSpace, NButton } from 'naive-ui'
 const { data: exercises } = useFetch('/api/exercises')
+const isTeacher = useIsTeacher()
 </script>
 
 <template>
   <n-page-header>
     <template #title>Aufgabenbücher</template>
     <template #extra>
-      <n-space>
+      <n-space v-if="isTeacher">
         <NuxtLink to="/create">
           <n-button>
             <template v-slot:icon>

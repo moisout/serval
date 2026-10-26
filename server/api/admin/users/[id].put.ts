@@ -1,3 +1,4 @@
+import { userRoles } from '~/utils/userRoles'
 import { usersTable } from '~~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
@@ -35,10 +36,18 @@ export default defineEventHandler(async (event) => {
     userToUpdate.username = body.username
   }
   if (body.role) {
+    if (!Object.hasOwn(userRoles, body.role)) {
+      setResponseStatus(event, 400)
+      return {
+        success: false,
+        error: 'Invalid role'
+      }
+    }
     userToUpdate.role = body.role
   }
 
-  const updateResults = await drizzle
+  // Drizzle throws if the update fails
+  await drizzle
     .update(usersTable)
     .set({
       username: userToUpdate.username,
@@ -46,16 +55,8 @@ export default defineEventHandler(async (event) => {
     })
     .where(eq(usersTable.id, userId))
 
-  if (updateResults.success) {
-    return {
-      success: true,
-      message: 'User updated successfully'
-    }
-  }
-
-  setResponseStatus(event, 500)
   return {
-    success: false,
-    error: 'Failed to update user'
+    success: true,
+    message: 'User updated successfully'
   }
 })

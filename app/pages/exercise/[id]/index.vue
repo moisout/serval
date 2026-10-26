@@ -15,6 +15,7 @@ const { danger } = globalVariables
 
 const route = useRoute()
 const router = useRouter()
+const isTeacher = useIsTeacher()
 
 const headers = useRequestHeaders(['cookie'])
 const { data: exercise } = useFetch<Exercise>(
@@ -84,12 +85,12 @@ const editExercise = () => {
       </template>
       <template #extra>
         <n-space>
-          <n-button type="error" @click="deleteExercise">
+          <n-button type="error" @click="deleteExercise" v-if="isTeacher">
             <template #icon>
               <Icon name="material-symbols:delete-rounded" />
             </template>
           </n-button>
-          <n-button @click="editExercise">
+          <n-button @click="editExercise" v-if="isTeacher">
             <template #icon>
               <Icon name="material-symbols:edit-square-outline-rounded" />
             </template>
@@ -107,7 +108,7 @@ const editExercise = () => {
     </n-page-header>
     <div class="exercise-content">
       <ExerciseDetail :exercise="exercise" />
-      <ExerciseResults :exercise="exercise" />
+      <ExerciseResults :exercise="exercise" v-if="isTeacher" />
     </div>
   </div>
   <div v-else>

@@ -9,6 +9,8 @@ import {
   NSelect
 } from 'naive-ui'
 
+definePageMeta({ middleware: 'teacher' })
+
 const { data: accessCodes, refresh } = useFetch('/api/admin/access-codes')
 
 useHead({

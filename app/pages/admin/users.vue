@@ -7,6 +7,8 @@ import {
   NButton
 } from 'naive-ui'
 
+definePageMeta({ middleware: 'teacher' })
+
 const { data: users, refresh } = useFetch('/api/admin/users')
 
 useHead({

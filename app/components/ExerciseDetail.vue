@@ -3,6 +3,8 @@ defineProps<{
   exercise: Exercise
 }>()
 
+const isTeacher = useIsTeacher()
+
 const mapAnswer = (answer: string) => {
   switch (answer) {
     case 'yes':
@@ -28,7 +30,7 @@ const mapAnswer = (answer: string) => {
         <p class="additional-text" v-if="question.additionalText">
           {{ question.additionalText }}
         </p>
-        <p class="answer-text">
+        <p class="answer-text" v-if="isTeacher">
           Korrekte Antwort: {{ mapAnswer(question.correctAnswer) }}
         </p>
         <AudioPlayer :text="getSpokenText(question)" />

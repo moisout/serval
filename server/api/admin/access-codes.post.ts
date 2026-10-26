@@ -1,5 +1,6 @@
 import { v4 } from 'uuid'
 import { AccessCode } from '~/utils/AccessCode'
+import { userRoles } from '~/utils/userRoles'
 import { accessCodesTable } from '~~/server/db/schema'
 import { requireTeacherSession } from '~~/server/utils/requireTeacherSession'
 
@@ -10,7 +11,7 @@ export default defineEventHandler(async (event) => {
     role: AccessCode['role']
   }>(event)
 
-  if (!body?.role) {
+  if (!body?.role || !Object.hasOwn(userRoles, body.role)) {
     setResponseStatus(event, 400)
     return {
       error: 'Role is required'

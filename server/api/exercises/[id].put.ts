@@ -2,7 +2,7 @@ import { Exercise } from '~/utils/Exercise'
 import { exercisesTable, questionsTable } from '~~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
-  await requireUserSession(event)
+  await requireTeacherSession(event)
 
   const exerciseId = getRouterParam(event, 'id')
 

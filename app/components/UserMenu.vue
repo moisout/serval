@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useDialog, NButton } from 'naive-ui'
 const { data, status, signOut } = useAuth()
+const isTeacher = useIsTeacher()
 
 const dialog = useDialog()
 
@@ -32,7 +33,7 @@ const logout = () => {
         <span class="user-role">{{ data?.role }}</span>
       </div>
     </div>
-    <NuxtLink to="/admin">
+    <NuxtLink to="/admin" v-if="isTeacher">
       <n-button quaternary round>Verwalten</n-button>
     </NuxtLink>
     <n-button quaternary round @click="logout" icon-placement="right">
