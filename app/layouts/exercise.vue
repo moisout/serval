@@ -6,7 +6,9 @@ useHead({
       name: 'description',
       content: 'Übung'
     }
-  ]
+  ],
+  // Removed again when the layout unmounts, so other pages can scroll
+  htmlAttrs: { class: 'html-exercise' }
 })
 </script>
 
@@ -22,14 +24,21 @@ html {
   font-family: globals.$font-primary;
 }
 
-html,
-body,
-#__nuxt,
+html.html-exercise {
+  &,
+  body,
+  #__nuxt {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
 .layout-exercise {
   margin: 0;
   padding: 0;
-  height: 100%;
-  width: 100%;
   overflow: hidden;
 }
 
