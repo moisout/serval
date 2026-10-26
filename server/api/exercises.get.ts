@@ -16,8 +16,8 @@ export default defineEventHandler(async (event) => {
     })
     .from(exercisesTable)
     .leftJoin(questionsTable, eq(exercisesTable.id, questionsTable.exerciseId))
-    .groupBy(questionsTable.exerciseId)
     .leftJoin(usersTable, eq(exercisesTable.authorId, usersTable.id))
+    .groupBy(exercisesTable.id)
 
   return (exercises || []).map((exercise) => ({
     ...exercise,
