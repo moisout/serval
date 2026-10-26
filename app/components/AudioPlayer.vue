@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NButton, NSpace, NSpin } from 'naive-ui'
+import { NSpin } from 'naive-ui'
 
 const props = defineProps<{
   text: string
@@ -99,33 +99,62 @@ const toggleAudio = () => {
 
 <template>
   <n-spin :show="audioState.buffering">
-    <n-space class="audio-player" align="center">
-      <n-button @click="toggleAudio" quaternary circle>
-        <template #icon>
-          <Icon
-            v-if="audioState.buffering"
-            name="material-symbols:hourglass-top-rounded"
-          />
-          <Icon
-            v-if="audioState.playing"
-            name="material-symbols:pause-outline-rounded"
-          />
-          <Icon v-else name="material-symbols:play-arrow-outline-rounded" />
-        </template>
-      </n-button>
-      <p class="length">
+    <button
+      type="button"
+      class="audio-player"
+      :aria-label="audioState.playing ? 'Pausieren' : 'Abspielen'"
+      @click="toggleAudio"
+    >
+      <span class="icon">
+        <Icon
+          v-if="audioState.buffering"
+          name="material-symbols:hourglass-top-rounded"
+        />
+        <Icon
+          v-else-if="audioState.playing"
+          name="material-symbols:pause-outline-rounded"
+        />
+        <Icon v-else name="material-symbols:play-arrow-outline-rounded" />
+      </span>
+      <span class="length">
         {{ getTimestampFromSeconds(audio?.duration) }}
-      </p>
-    </n-space>
+      </span>
+    </button>
   </n-spin>
 </template>
 
 <style lang="scss" scoped>
 .audio-player {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
   border: solid 1px globals.$gray-300;
   background-color: globals.$bg-primary;
   border-radius: 10px;
   padding: 5px 15px 5px 5px;
+  font-family: globals.$font-primary;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: globals.$gray-200;
+  }
+
+  &:focus-visible {
+    outline: 2px solid globals.$primary;
+    outline-offset: 2px;
+  }
+
+  .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
+    color: globals.$gray-900;
+  }
 
   .length {
     color: globals.$gray-700;
