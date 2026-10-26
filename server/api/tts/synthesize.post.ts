@@ -2,7 +2,7 @@ import { blob } from 'hub:blob'
 import { hashString } from '~~/server/utils/hashString'
 
 export default defineEventHandler(async (event) => {
-  await requireUserSession(event)
+  const user = await requireUserSession(event)
 
   const { text } = await readBody<{ text: string }>(event)
 
@@ -23,6 +23,9 @@ export default defineEventHandler(async (event) => {
   const secretKey: string | undefined =
     event.context.cloudflare?.env?.TTS_RELAY_SECRET_KEY ??
     process.env.TTS_RELAY_SECRET_KEY
+
+  // Only generating new audio costs money, cached audio isn't limited
+  await enforceRateLimit(event, rateLimitRules.ttsGenerationsPerUser, user.id)
 
   if (!secretKey) {
     setResponseStatus(event, 500)

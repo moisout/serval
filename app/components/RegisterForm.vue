@@ -16,8 +16,11 @@ const register = async () => {
       },
       { callbackUrl: '/' }
     )
-  } catch {
-    error.value = 'Registrierung fehlgeschlagen'
+  } catch (e: any) {
+    error.value =
+      e?.statusCode === 429
+        ? 'Zu viele Versuche, bitte später erneut versuchen'
+        : 'Registrierung fehlgeschlagen'
   }
 }
 

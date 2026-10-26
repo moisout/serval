@@ -11,8 +11,11 @@ const login = async () => {
       { username: username.value, password: password.value },
       { callbackUrl: '/' }
     )
-  } catch {
-    error.value = 'Falscher Benutzername oder Passwort'
+  } catch (e: any) {
+    error.value =
+      e?.statusCode === 429
+        ? 'Zu viele Versuche, bitte später erneut versuchen'
+        : 'Falscher Benutzername oder Passwort'
   }
 }
 

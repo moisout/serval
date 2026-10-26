@@ -12,6 +12,23 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  const ip = getClientIp(event)
+
+  if (ip) {
+    if (
+      (await getRateLimitCount(rateLimitRules.registerFailuresPerIp, ip)) >=
+      rateLimitRules.registerFailuresPerIp.limit
+    ) {
+      throwTooManyRequests(event, rateLimitRules.registerFailuresPerIp)
+    }
+    if (
+      (await getRateLimitCount(rateLimitRules.registerPerIp, ip)) >=
+      rateLimitRules.registerPerIp.limit
+    ) {
+      throwTooManyRequests(event, rateLimitRules.registerPerIp)
+    }
+  }
+
   const drizzle = useDrizzle()
 
   const accessCode = await drizzle.query.accessCodesTable.findFirst({
@@ -19,6 +36,10 @@ export default defineEventHandler(async (event) => {
   })
 
   if (!accessCode) {
+    // Access codes are short, so guessing attempts are limited strictly
+    if (ip) {
+      await consumeRateLimit(rateLimitRules.registerFailuresPerIp, ip)
+    }
     throw createError({
       statusCode: 403,
       message: 'Invalid access code'
@@ -35,6 +56,10 @@ export default defineEventHandler(async (event) => {
       success: false,
       message: 'User already exists'
     }
+  }
+
+  if (ip) {
+    await consumeRateLimit(rateLimitRules.registerPerIp, ip)
   }
 
   const authToken = v4()
