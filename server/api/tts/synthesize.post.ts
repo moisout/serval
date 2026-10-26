@@ -1,3 +1,4 @@
+import { blob } from 'hub:blob'
 import { hashString } from '~~/server/utils/hashString'
 
 export default defineEventHandler(async (event) => {
@@ -12,13 +13,18 @@ export default defineEventHandler(async (event) => {
   const textHash = await hashString(cleanedText)
   const fileName = `${textHash}.mp3`
 
-  const existingFile = await hubBlob().get(fileName)
+  const existingFile = await blob.get(fileName)
 
   if (existingFile) {
-    return hubBlob().serve(event, fileName)
+    return blob.serve(event, fileName)
   }
 
-  if (!process.env.TTS_RELAY_SECRET_KEY) {
+  // Nitro doesn't populate process.env on Cloudflare, secrets live on the request env
+  const secretKey: string | undefined =
+    event.context.cloudflare?.env?.TTS_RELAY_SECRET_KEY ??
+    process.env.TTS_RELAY_SECRET_KEY
+
+  if (!secretKey) {
     setResponseStatus(event, 500)
     return {
       error: 'TTS relay secret key is not set'
@@ -30,7 +36,7 @@ export default defineEventHandler(async (event) => {
     body: {
       text: cleanedText,
       lang: query.lang?.toString() || 'de-DE',
-      secretKey: process.env.TTS_RELAY_SECRET_KEY
+      secretKey
     }
   })
 
@@ -43,7 +49,7 @@ export default defineEventHandler(async (event) => {
 
   const audioBlob = new Blob([audioResponse as any])
 
-  const uploadedAudio = await hubBlob().put(fileName, audioBlob, {
+  const uploadedAudio = await blob.put(fileName, audioBlob, {
     customMetadata: {
       originalText: cleanedText
     }
@@ -56,5 +62,5 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  return hubBlob().serve(event, fileName)
+  return blob.serve(event, fileName)
 })

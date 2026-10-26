@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import { questionsTable, resultsTable } from '~~/server/database/schema'
+import { questionsTable, resultsTable } from '~~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
   const user = await requireUserSession(event)

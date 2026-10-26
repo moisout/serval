@@ -1,5 +1,5 @@
 import { H3Event } from 'h3'
-import { usersTable } from '~~/server/database/schema'
+import { usersTable } from '~~/server/db/schema'
 
 export const verifySession = async (event: H3Event) => {
   const auth = event.headers.get('Authorization')

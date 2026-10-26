@@ -1,5 +1,5 @@
 import { Exercise } from '~/utils/Exercise'
-import { exercisesTable, questionsTable } from '../database/schema'
+import { exercisesTable, questionsTable } from '~~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
   const session = await requireTeacherSession(event)

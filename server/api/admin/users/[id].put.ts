@@ -1,4 +1,4 @@
-import { usersTable } from '~~/server/database/schema'
+import { usersTable } from '~~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
   const session = await requireTeacherSession(event)

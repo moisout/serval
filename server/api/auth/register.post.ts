@@ -1,6 +1,6 @@
 import { v4 } from 'uuid'
 import { UserRegistration } from '~/utils/UserRegistration'
-import { accessCodesTable, usersTable } from '~~/server/database/schema'
+import { accessCodesTable, usersTable } from '~~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<UserRegistration>(event)

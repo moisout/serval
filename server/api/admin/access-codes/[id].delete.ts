@@ -1,4 +1,4 @@
-import { accessCodesTable } from '~~/server/database/schema'
+import { accessCodesTable } from '~~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')

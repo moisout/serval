@@ -2,7 +2,7 @@ import {
   exercisesTable,
   questionsTable,
   usersTable
-} from '~~/server/database/schema'
+} from '~~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
   await requireUserSession(event)

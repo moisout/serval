@@ -1,6 +1,6 @@
 import { v4 } from 'uuid'
 import { AccessCode } from '~/utils/AccessCode'
-import { accessCodesTable } from '~~/server/database/schema'
+import { accessCodesTable } from '~~/server/db/schema'
 import { requireTeacherSession } from '~~/server/utils/requireTeacherSession'
 
 export default defineEventHandler(async (event) => {

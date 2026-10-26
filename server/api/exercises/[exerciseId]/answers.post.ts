@@ -1,5 +1,5 @@
 import { v4 } from 'uuid'
-import { resultsTable } from '~~/server/database/schema'
+import { resultsTable } from '~~/server/db/schema'
 export default defineEventHandler(async (event) => {
   const user = await requireUserSession(event)
 

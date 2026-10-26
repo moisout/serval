@@ -3,7 +3,7 @@ import {
   questionsTable,
   resultsTable,
   usersTable
-} from '~~/server/database/schema'
+} from '~~/server/db/schema'
 
 export default defineEventHandler(async (event) => {
   const user = await requireTeacherSession(event)

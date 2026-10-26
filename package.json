@@ -10,35 +10,36 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "format": "prettier --write .",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "wrangler d1 migrations apply DB --config dist/_worker.js/wrangler.json",
+    "deploy": "wrangler pages deploy --cwd dist --project-name serval --branch main"
   },
   "devDependencies": {
-    "@iconify-json/material-symbols": "1.2.21",
-    "@types/uuid": "10.0.0",
-    "drizzle-kit": "0.31.1",
-    "prettier": "3.5.3",
-    "prettier-plugin-organize-imports": "^4.1.0",
-    "typescript": "5.8.3",
-    "vueuc": "^0.4.64",
-    "wrangler": "4.16.0"
+    "@iconify-json/material-symbols": "1.2.96",
+    "drizzle-kit": "0.31.11",
+    "prettier": "3.9.10",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "typescript": "6.0.3",
+    "vueuc": "^0.4.66",
+    "wrangler": "4.152.0"
   },
   "dependencies": {
-    "@nuxt/fonts": "0.11.4",
-    "@nuxt/icon": "1.13.0",
-    "@nuxthub/core": "0.8.27",
-    "@nuxtjs/mdc": "0.17.0",
-    "@sidebase/nuxt-auth": "0.10.1",
-    "bcryptjs": "3.0.2",
-    "drizzle-orm": "0.43.1",
-    "naive-ui": "^2.41.0",
-    "nuxt": "3.17.3",
+    "@libsql/client": "0.18.0",
+    "@nuxt/fonts": "1.2.0",
+    "@nuxt/icon": "2.6.1",
+    "@nuxthub/core": "0.10.11",
+    "@nuxtjs/mdc": "0.23.2",
+    "@sidebase/nuxt-auth": "1.4.0",
+    "bcryptjs": "3.0.3",
+    "drizzle-orm": "0.45.4",
+    "naive-ui": "^2.45.3",
+    "nuxt": "4.6.2",
     "nuxtjs-naive-ui": "1.0.2",
-    "readable-stream": "^4.7.0",
-    "sass": "1.89.0",
-    "unenv": "1.10.0",
-    "uuid": "11.1.0",
-    "vue": "3.5.14",
-    "vue-router": "4.5.1"
+    "readable-stream": "^4.8.0",
+    "sass": "1.106.1",
+    "uuid": "14.0.3",
+    "vue": "3.5.44",
+    "vue-router": "5.4.0"
   },
   "trustedDependencies": [
     "@parcel/watcher",
@@ -46,8 +47,5 @@
     "protobufjs",
     "sharp",
     "workerd"
-  ],
-  "patchedDependencies": {
-    "@juggle/resize-observer@3.4.0": "patches/@juggle%2Fresize-observer@3.4.0.patch"
-  }
+  ]
 }
